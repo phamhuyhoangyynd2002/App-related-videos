@@ -1,0 +1,79 @@
+/* Thành phần dùng chung mọi template (frame.md: logo-bug, caption, verdict-stamp). Cần brand.css trước. */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { margin: 0; overflow: hidden; background: var(--ground); }
+.is-vertical { font-family: var(--font); color: var(--text); }
+
+.clip { position: absolute; inset: 0; overflow: hidden; }
+.gr-root-bg { background: var(--ground); }
+
+/* logo-bug: góc trên trái trong vùng an toàn (x 60, y 260), cao tối đa 72px, mờ 0.9, đứng yên */
+.gr-logo-layer { z-index: 30; pointer-events: none; }
+.gr-logo-bug {
+  position: absolute; left: var(--safe-left); top: 256px; height: 84px;
+  display: flex; align-items: center; gap: 14px;
+}
+.gr-logo-img { height: 84px; width: auto; filter: drop-shadow(0 0 3px #fff) drop-shadow(0 4px 8px rgba(0,0,0,.6)); }
+.gr-logo-mark { width: 22px; height: 44px; background: var(--brand); clip-path: polygon(0 0, 100% 18%, 100% 100%, 0 82%); }
+.gr-logo-text {
+  font-family: var(--font); font-weight: 900; font-size: 50px; line-height: 1; letter-spacing: -0.01em;
+  text-transform: uppercase; color: var(--brand); -webkit-text-stroke: 9px var(--brand-dark); paint-order: stroke fill;
+  white-space: nowrap;
+}
+
+/* màn kết chuẩn của thương hiệu (end-card), giống nhau ở mọi video */
+.gr-end-layer { z-index: 26; pointer-events: none; }
+.gr-end-bg { position: absolute; inset: 0; background: var(--brand-dark); opacity: 0; }
+.gr-end-stack {
+  position: absolute; left: var(--safe-left); right: var(--safe-right); top: 330px; height: 820px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; text-align: center;
+}
+.gr-end-logo { height: 360px; width: auto; opacity: 0; filter: drop-shadow(0 0 4px #fff); }
+.gr-end-name {
+  font-family: var(--font); font-weight: 900; font-size: 128px; line-height: 0.95; text-transform: uppercase;
+  color: var(--brand); -webkit-text-stroke: 14px #000; paint-order: stroke fill; white-space: nowrap; opacity: 0;
+}
+.gr-end-tag { font-family: var(--font); font-weight: 700; font-size: 44px; line-height: 1.2; color: #FFFFFF; opacity: 0; }
+.gr-end-cta {
+  font-family: var(--font); font-weight: 900; font-size: 52px; line-height: 1; color: #111; background: var(--accent);
+  padding: 18px 34px 22px; opacity: 0; white-space: nowrap;
+}
+
+/* phụ đề: cụm 2–4 âm tiết, tâm ở 65% chiều cao, từ đang đọc màu accent */
+.gr-caption-layer { z-index: 25; pointer-events: none; }
+.gr-caption {
+  position: absolute; left: var(--safe-left); right: var(--safe-right);
+  top: calc(var(--caption-center-y) - 50px); height: 100px;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; opacity: 0;
+  font-family: var(--font); font-weight: 800; font-size: var(--caption-px); line-height: 1.2;
+  color: #FFFFFF; -webkit-text-stroke: 12px var(--outline); paint-order: stroke fill;
+}
+.gr-caption-line { max-width: 100%; }
+.gr-word { color: #FFFFFF; }
+.gr-word-key { color: var(--accent); font-size: 1.18em; }
+
+/* verdict-stamp: giữa vùng an toàn, tâm ở 45% chiều cao, xoay −8°, viền đôi */
+.gr-stamp-layer { z-index: 24; pointer-events: none; }
+.gr-stamp {
+  position: absolute; left: var(--safe-left); right: var(--safe-right);
+  top: calc(45% - 120px); height: 240px;
+  margin: 0 auto; width: max-content; max-width: 820px;
+  display: flex; align-items: center; justify-content: center;
+  padding: 26px 48px;
+  border: 12px solid currentColor; border-radius: 22px;
+  box-shadow: inset 0 0 0 8px rgba(26, 22, 51, 0.92), inset 0 0 0 14px currentColor, 0 18px 60px rgba(0, 0, 0, 0.45);
+  background: rgba(26, 22, 51, 0.9);
+  opacity: 0;
+}
+.gr-stamp-text {
+  font-family: var(--font); font-weight: 900; font-size: var(--stamp-px); line-height: 1; text-transform: uppercase;
+  white-space: nowrap; color: currentColor; letter-spacing: -0.01em;
+}
+
+.gr-safe-layer { z-index: 99; pointer-events: none; }
+.gr-safe-img { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* mũi tên vẽ bằng SVG thay glyph "→" (appreel.js drawArrows): rộng ~1 chữ, cao bằng chữ in hoa, nét ~0,17em */
+.gr-arrow { display: inline-block; width: 0.98em; height: 0.69em; vertical-align: baseline; }
+.gr-arrow svg { display: block; width: 100%; height: 100%; overflow: visible; }

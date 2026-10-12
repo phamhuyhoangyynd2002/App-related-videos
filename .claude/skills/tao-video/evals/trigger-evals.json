@@ -1,0 +1,8 @@
+[
+  {"query": "làm cho mình video top 4 ứng dụng ít người biết cho sinh viên", "should_trigger": true},
+  {"query": "làm tiếp series ứng dụng ít người biết phần 3 nhé", "should_trigger": true},
+  {"query": "ra một video ngắn về ứng dụng AI đang lên top App Store", "should_trigger": true},
+  {"query": "tuần này nên làm video gì", "should_trigger": false},
+  {"query": "sửa hook trong script.json của dự án hôm qua", "should_trigger": false},
+  {"query": "viết caption tiktok cho video vừa render", "should_trigger": false}
+]

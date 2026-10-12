@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="vi" data-composition-variables='[{"id":"logoSrc","type":"string","label":"Logo (để trống = _shared/logo.png)","default":""}]'>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>AppReel – tier-board</title>
+    <!-- Template tier-board (dọc 1080×1920). Không chứa nội dung cố định: prepare_render.py điền dữ liệu
+         vào #appreel-data, appreel.js dựng cảnh theo timeline.json. Không phát nhạc/sfx (mix_audio.py trộn sau). -->
+    <script src="_shared/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="_shared/brand.css" />
+    <link rel="stylesheet" href="_shared/appreel.css" />
+    <link rel="stylesheet" href="_shared/gags.css" />
+    <link rel="stylesheet" href="_shared/kieu-hinh.css" />
+    <link rel="stylesheet" href="tier-board.css" />
+    <style>
+      /* Font khai báo cả ở đây để lint của HyperFrames thấy @font-face cục bộ ngay trong composition */
+      @font-face { font-family: "Be Vietnam Pro"; src: url("_shared/fonts/BeVietnamPro-Black.ttf") format("truetype"); font-weight: 900; font-style: normal; }
+      @font-face { font-family: "Be Vietnam Pro"; src: url("_shared/fonts/BeVietnamPro-ExtraBold.ttf") format("truetype"); font-weight: 800; font-style: normal; }
+      @font-face { font-family: "Be Vietnam Pro"; src: url("_shared/fonts/BeVietnamPro-SemiBold.ttf") format("truetype"); font-weight: 600; font-style: normal; }
+      @font-face { font-family: "Be Vietnam Pro"; src: url("_shared/fonts/BeVietnamPro-Medium.ttf") format("truetype"); font-weight: 500; font-style: normal; }
+      html, body { width: 1080px; height: 1920px; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="tier-board" data-start="0" data-duration="60" data-width="1080" data-height="1920"></div>
+
+    <script id="appreel-data" type="application/json"></script>
+
+    <script src="_shared/appreel.js"></script>
+    <script src="_shared/gags.js"></script>
+    <script src="_shared/kieu-hinh.js"></script>
+    <script src="scenes/board.js"></script>
+    <script src="scenes/scenes.js"></script>
+    <script>
+      // Dựng cảnh ngay; timeline GSAP (paused) được đăng ký sau khi font Be Vietnam Pro tải xong và đã kiểm tra.
+      window.AppReel.run({
+        compositionId: "tier-board",
+        builders: { intro: window.TierBoard.intro, item: window.TierBoard.item, outro: window.TierBoard.outro },
+        // tier-board tự chuyển mục (dải trượt vào, bảng thu về góc): bỏ qua scenes[].chuyen
+        chuyen: false,
+      }).then(function (built) {
+        window.__timelines = window.__timelines || {};
+        window.__timelines["tier-board"] = built.timeline;
+      });
+    </script>
+  </body>
+</html>

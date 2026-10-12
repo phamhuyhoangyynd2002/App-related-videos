@@ -1,0 +1,39 @@
+/* Kiểu hình (kieu-hinh.js). Không đặt CSS transform ở phần tử được GSAP tween (chỉ transform-origin). */
+
+/* máy quay của khung ảnh: chứa mọi lớp ảnh, kiểu hình phóng/cắt cả khung quanh một điểm */
+.kh-cam { position: absolute; inset: 0; transform-origin: 0 0; }
+/* lớp phủ: khung ngắm, chớp sáng, ô truyện tranh; trên ảnh, dưới thẻ thông tin (z 3) */
+.kh-over { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+
+/* dap-zoom: khung ngắm bốn góc chữ L màu accent viền đen */
+.kh-bracket { position: absolute; width: 64px; height: 64px; box-sizing: border-box; opacity: 0;
+  border: 0 solid var(--accent); filter: drop-shadow(0 0 0 #000) drop-shadow(3px 3px 0 #000); }
+.kh-bracket-0 { border-top-width: 12px; border-left-width: 12px; }
+.kh-bracket-1 { border-top-width: 12px; border-right-width: 12px; }
+.kh-bracket-2 { border-bottom-width: 12px; border-left-width: 12px; }
+.kh-bracket-3 { border-bottom-width: 12px; border-right-width: 12px; }
+
+/* chớp sáng lúc chạm (dap-zoom) và mỗi nhát cắt (cat-nhay): trắng ngả ấm */
+.kh-flash { position: absolute; inset: 0; background: #FFF6E0; opacity: 0; }
+
+/* chia-o: ô truyện tranh xéo, viền trắng dày (drop-shadow bốn phía trên khối chứa của ô đã cắt) */
+.kh-panels { position: absolute; inset: 0; }
+.kh-panel { position: absolute; inset: 0; opacity: 0;
+  filter: drop-shadow(9px 0 0 #FFFFFF) drop-shadow(-9px 0 0 #FFFFFF) drop-shadow(0 9px 0 #FFFFFF) drop-shadow(0 -9px 0 #FFFFFF)
+    drop-shadow(5px 0 0 #000) drop-shadow(-5px 0 0 #000) drop-shadow(0 6px 10px rgba(0, 0, 0, 0.6)); }
+.kh-panel-clip { position: absolute; inset: 0; overflow: hidden; }
+.kh-panel-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* lat-the: mặt úp của thẻ ("?") và vệt sáng lướt qua sau khi lật */
+.kh-flip { position: relative; overflow: hidden; }
+/* mặt úp lấy nền của chính thẻ (top-list tím, tier-board đen); thẻ nền trong suốt thì phủ ground-2 */
+.kh-flip-cover { position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; padding-left: 28px;
+  background: var(--ground-2); background: inherit; background-color: var(--ground-2); }
+.kh-flip-q { font-family: var(--font); font-weight: 900; font-size: 72px; line-height: 1; color: var(--accent);
+  -webkit-text-stroke: 6px #000; paint-order: stroke fill; }
+.kh-sheen { position: absolute; top: -20%; bottom: -20%; left: 0; width: 38%; z-index: 3; opacity: 0; pointer-events: none;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.55) 50%, rgba(255, 255, 255, 0) 100%); }
+
+/* dem-so: các số trung gian chồng đúng chỗ giá trị thật */
+.kh-count { position: relative; transform-origin: 0 60%; }
+.kh-count-step { position: absolute; left: 0; top: 0; white-space: nowrap; opacity: 0; transform-origin: 0 60%; }

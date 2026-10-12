@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch",
+      "Bash(python3 .claude/skills/:*)",
+      "Bash(ffprobe:*)",
+      "Bash(ffmpeg:*)",
+      "Bash(npx hyperframes:*)",
+      "Bash(node -v)",
+      "Bash(mkdir -p projects/:*)"
+    ]
+  }
+}

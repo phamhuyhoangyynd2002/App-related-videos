@@ -1,0 +1,15 @@
+node_modules/
+.env
+.DS_Store
+
+# Dữ liệu nặng của từng video (giữ lại brief, research, script, fact-check, timeline, seo)
+projects/*/assets/
+projects/*/audio/
+projects/*/render/
+projects/*/out/*.mp4
+projects/*/out/frames/
+
+# Ảnh chụp thử của HyperFrames
+**/snapshots/
+/vd
+/projects/

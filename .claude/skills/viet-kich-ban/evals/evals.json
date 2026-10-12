@@ -1,0 +1,41 @@
+{
+  "skill_name": "viet-kich-ban",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Viết kịch bản cho projects/_mau-top-list, top 3 ứng dụng miễn phí quét tài liệu, bản 45–60 giây",
+      "expected_output": "script.json hợp lệ, có message, hook_variants, role, shots có cue; validate_script.py không LỖI",
+      "files": ["projects/_mau-top-list/brief.md", "projects/_mau-top-list/research.md"],
+      "assertions": [
+        "validate_script.py thoát mã 0",
+        "câu đầu tiên của cảnh 1 có không quá 12 từ",
+        "có ít nhất 2 phần tử trong hook_variants, mỗi phần tử khác hook_type",
+        "mọi facts có source_ids trỏ tới sources có thật",
+        "lời đọc không chứa 'đăng ký kênh', 'tiktok', 'youtube', 'follow'",
+        "cảnh cuối có một câu hỏi cho người xem"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Hook video này nhạt quá, đổi giúp mình kiểu khác, projects/_mau-top-list",
+      "expected_output": "Chỉ cảnh 1 và hook_type đổi; có bản sao lưu script.v<N>.json",
+      "files": ["projects/_mau-top-list/script.json"],
+      "assertions": [
+        "tồn tại script.v1.json (hoặc số phiên bản cao hơn)",
+        "hook_type mới khác hook_type cũ",
+        "các cảnh từ 2 trở đi giữ nguyên narration"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Làm bản nhanh 15 giây về một ứng dụng AI vừa lên top tuần này từ research có sẵn ở projects/_mau-news",
+      "expected_output": "Kịch bản 13–25 giây, 2–3 cảnh, target_seconds khoảng [13, 25]",
+      "files": ["projects/_mau-news/brief.md", "projects/_mau-news/research.md"],
+      "assertions": [
+        "target_seconds nằm trong khoảng 13–25",
+        "validate_script.py báo tổng độ dài ước tính trong khoảng 13–25 giây",
+        "không có cảnh nào ước tính dài quá 9 giây"
+      ]
+    }
+  ]
+}

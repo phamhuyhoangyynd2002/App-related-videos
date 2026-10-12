@@ -1,0 +1,196 @@
+/* Chữ in hoa nhiều dòng: line-height ≥ 1.3, vì dấu chồng (Ằ, Ổ, Ợ) của Be Vietnam Pro cao tới ~1,3em trên chân chữ;
+   1.05–1.2 làm dấu dòng dưới chạm chữ dòng trên (QA 05/10/2026).
+   Bố cục top-list, khung dọc 1080×1920. Vùng nội dung: x 60–930, y 350–1165
+   (trên: logo-bug ở 260–324; dưới: phụ đề tâm ở 65% = 1248, vùng ứng dụng che từ 1470).
+   Không đặt CSS transform ở phần tử được GSAP tween. */
+
+.gr-scene { color: var(--text); font-family: var(--font); }
+
+.tl-bg { position: absolute; inset: 0; overflow: hidden; background: var(--ground); }
+.tl-band { position: absolute; }
+.tl-wipe { position: absolute; inset: 0; opacity: 0; transform-origin: 0% 50%; background: var(--ground-2); }
+
+.tl-col {
+  position: absolute; left: var(--safe-left); width: 870px; top: 350px; bottom: 755px;
+  display: flex; flex-direction: column; gap: 24px;
+}
+
+/* ---------------- item ---------------- */
+.tl-head { display: flex; align-items: flex-end; gap: 30px; }
+.tl-rank-wrap, .tl-rank-punch { display: flex; }
+.tl-rank-punch { transform-origin: 50% 70%; }
+.tl-rank {
+  display: flex; align-items: flex-start;
+  font-weight: 900; font-size: 280px; line-height: 0.8; letter-spacing: -0.05em; color: var(--accent);
+}
+.tl-hash { font-size: 0.4em; line-height: 1; margin-top: 0.06em; margin-right: 0.06em; }
+.tl-num { line-height: 0.8; }
+.tl-info { flex: 1; min-width: 0; padding-bottom: 12px; display: flex; flex-direction: column; gap: 12px; }
+.tl-genre-box { display: flex; flex-direction: column; }
+.tl-genre { font-weight: 900; font-size: 84px; line-height: 1.3; text-transform: uppercase; letter-spacing: -0.01em; transform-origin: 0% 50%; }
+.tl-bar { height: 12px; width: 220px; margin-top: 14px; background: var(--accent); transform-origin: 0% 50%; }
+.tl-rep-name { display: block; font-weight: 800; font-size: 52px; line-height: 1.2; }
+
+.tl-facts { display: flex; flex-direction: column; gap: 10px; }
+.tl-fact { background: var(--ground-2); padding: 10px 28px 12px; border-left: 10px solid var(--accent); }
+.tl-fact-label { font-weight: 600; font-size: 44px; line-height: 1.2; color: var(--text-dim); width: max-content; }
+/* width: max-content để đo đúng bề rộng chữ (fitText, chia dòng) thay vì bề rộng khối */
+.tl-fact-value { font-weight: 800; font-size: 56px; line-height: 1.2; width: max-content; }
+.tl-fact-line { display: block; }
+
+/* v0: hạng trái, nền dải chéo */
+.tl-v0 .tl-band { left: -220px; top: 600px; width: 1520px; height: 560px; background: var(--ground-2); }
+
+/* v1: hạng phải, căn phải, nền đảo màu */
+.tl-v1 .tl-bg { background: var(--ground-2); }
+.tl-v1 .tl-band { left: -220px; top: 250px; width: 1520px; height: 400px; background: var(--ground); }
+.tl-v1 .tl-wipe { background: var(--ground); }
+.tl-v1 .tl-head { flex-direction: row-reverse; }
+.tl-v1 .tl-col { text-align: right; }
+.tl-v1 .tl-genre { transform-origin: 100% 50%; }
+.tl-v1 .tl-bar { align-self: flex-end; transform-origin: 100% 50%; }
+.tl-v1 .tl-fact { background: var(--ground); border-left: 0; border-right: 10px solid var(--accent); }
+
+/* v2: hạng giữa, nền tròn */
+.tl-v2 .tl-band { left: 90px; top: 230px; width: 900px; height: 900px; border-radius: 50%; background: var(--ground-2); }
+.tl-v2 .tl-col { text-align: center; gap: 18px; }
+.tl-v2 .tl-head { justify-content: center; }
+.tl-v2 .tl-info { display: none; }
+.tl-v2 .tl-rank { font-size: 250px; }
+.tl-v2 .tl-genre { transform-origin: 50% 50%; }
+.tl-v2 .tl-bar { align-self: center; transform-origin: 50% 50%; }
+.tl-v2 .tl-rep { display: flex; justify-content: center; align-items: baseline; gap: 16px; }
+.tl-v2 .tl-rep-name { font-size: 48px; }
+.tl-v2 .tl-fact { border-left: 0; border-top: 6px solid var(--accent); background: rgba(26, 22, 51, 0.92); padding: 8px 28px 12px; }
+
+/* m0/m1: có ảnh */
+.tl-m0 .tl-band, .tl-m1 .tl-band { left: -220px; top: 800px; width: 1520px; height: 720px; background: var(--ground-2); }
+.tl-m0 .tl-rank, .tl-m1 .tl-rank { font-size: 230px; }
+.tl-m1 .tl-head { flex-direction: row-reverse; }
+.tl-m1 .tl-info { text-align: right; }
+.tl-m1 .tl-genre { transform-origin: 100% 50%; }
+.tl-m1 .tl-bar { align-self: flex-end; transform-origin: 100% 50%; }
+.tl-frame { position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; background: var(--ground-2); border-radius: 6px; }
+.tl-shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tl-m0 .tl-facts, .tl-m1 .tl-facts { position: absolute; left: 18px; right: 18px; bottom: 18px; z-index: 3; flex-direction: column-reverse; }
+.tl-m0 .tl-fact, .tl-m1 .tl-fact { background: rgba(26, 22, 51, 0.94); }
+/* m0/m1: thẻ nằm đè đáy ảnh ngang, nên nhãn và giá trị cùng một hàng để thẻ thấp, không che hết ảnh */
+.tl-m0 .tl-fact, .tl-m1 .tl-fact { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 6px 26px 8px; }
+.tl-m0 .tl-fact-label, .tl-m1 .tl-fact-label { white-space: nowrap; }
+/* giá trị không vừa bên phải nhãn (item.js thêm class): nhãn trên, giá trị dưới */
+.tl-m0 .tl-fact.tl-fact-stack, .tl-m1 .tl-fact.tl-fact-stack { display: block; }
+.tl-m1 .tl-fact.tl-fact-stack .tl-fact-value { margin-left: auto; }
+/* tl-tall (script.media_tall): ảnh ngang lấp tới đáy vùng an toàn (y 1470); thẻ ở đỉnh khung, chữ ≥ 48px */
+.tl-tall .tl-col { bottom: 450px; }
+.tl-tall .tl-band { top: 560px; height: 1000px; }
+.tl-tall .tl-facts { top: 18px; bottom: auto; flex-direction: column; }
+.tl-tall .tl-fact-label { font-size: 48px; }
+.tl-tall .tl-fact-value { font-size: 56px; }
+.tl-clip { position: absolute; object-fit: cover; z-index: 2; }
+
+/* mp: ảnh dọc (khung điện thoại của ứng dụng). Hạng, tựa, tên ứng dụng, thẻ ở cột trái 470px; ảnh cao bên phải giữ
+   trọn khung dọc (tỉ lệ ~0,46), không cắt ngang. Cột kéo tới y 1180 (phụ đề bắt đầu ~1198). */
+.tl-mp .tl-col { bottom: 740px; }
+.tl-mp .tl-band { left: -220px; top: 760px; width: 1520px; height: 640px; background: var(--ground-2); }
+.tl-mp .tl-head { width: 470px; flex-direction: column; align-items: flex-start; gap: 10px; }
+.tl-mp .tl-info { width: 100%; padding-bottom: 0; gap: 6px; }
+.tl-mp .tl-rank { font-size: 200px; }
+.tl-mp .tl-genre { font-size: 72px; }
+.tl-mp .tl-rep-name { font-size: 48px; }
+.tl-mp .tl-facts { width: 470px; gap: 8px; }
+.tl-mp .tl-fact { padding: 6px 18px 8px; }
+.tl-mp .tl-col { gap: 14px; }
+.tl-mp .tl-fact-label, .tl-mp .tl-fact-value { line-height: 1.15; }
+.tl-mp .tl-frame { position: absolute; left: 492px; right: 0; top: 0; bottom: 0; border-radius: 18px; }
+/* mp: ô phóng to cho nhịp có crop (shots[].crop) – phá khung điện thoại, rộng hết cột, từ dưới tên ứng dụng (top đặt
+   trong fit) tới đáy cột; che tạm thẻ cột trái trong lúc hiện. Ảnh đặt bằng placeCrop (appreel.js). */
+.tl-zoom {
+  position: absolute; left: 0; right: 0; top: 380px; bottom: 0; z-index: 4; overflow: hidden; opacity: 0;
+  background: var(--ground-2); border: 6px solid var(--accent); border-radius: 18px; transform-origin: 85% 30%;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------------- intro: hook ---------------- */
+.tl-hook .tl-band { left: -220px; top: 720px; width: 1520px; height: 520px; background: var(--ground-2); }
+.tl-hook-text { font-weight: 900; font-size: var(--hook-px); line-height: 1.3; text-transform: uppercase; letter-spacing: -0.01em; }
+.tl-hook-sub { margin-top: -8px; font-weight: 800; font-size: 50px; line-height: 1.2; text-transform: uppercase;
+  white-space: nowrap; color: var(--accent); }
+/* reveal_top: hạng 1 lộ ngay giây 0. Ô lớn bên trái kéo tới mép dưới vùng an toàn (y 1460), các ô khác xếp dọc
+   bên phải; chữ trong ô nằm sát đỉnh/đáy ô nên không vướng dải phụ đề (y ~1198–1298). */
+.tl-hook.tl-reveal .tl-col { bottom: 460px; gap: 20px; }
+.tl-grid.tl-grid-hero { grid-template-columns: 1.5fr 1fr; grid-auto-rows: auto; }
+.tl-grid-hero .tl-tile { grid-column: 2; }
+.tl-grid-hero .tl-tile.tl-tile-hero { grid-column: 1; grid-row: 1 / -1; border: 6px solid var(--accent); padding: 14px 20px 18px; }
+.tl-tile-hero .tl-tile-num { font-size: 120px; }
+.tl-tile-hero .tl-tile-genre { font-size: 52px; }
+/* chỗ dành cho sticker linh vật (không vẽ gì): góc trên phải ô hạng 1, cỡ đặt trong intro.js */
+.tl-sticker-slot { position: absolute; top: 8px; right: 8px; width: 200px; height: 200px; pointer-events: none; }
+.tl-grid { position: relative; flex: 1 1 auto; min-height: 0; display: grid; gap: 12px; grid-auto-rows: 1fr; }
+.tl-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.tl-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.tl-tile {
+  position: relative; overflow: hidden; min-height: 0;
+  background: var(--ground); padding: 14px 16px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.tl-tile:nth-child(3n + 2) { background: #221C44; }
+.tl-tile-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(6px) saturate(1.2); transform: scale(1.1); }
+.tl-tile-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(26, 22, 51, 0.55) 0%, rgba(26, 22, 51, 0.92) 70%); }
+.tl-tile-num { position: relative; font-weight: 900; font-size: 84px; line-height: 0.9; color: var(--accent);
+  -webkit-text-stroke: 10px #1A1633; paint-order: stroke fill; }
+.tl-tile-genre { position: relative; width: max-content; max-width: none; font-weight: 800; font-size: 44px; line-height: 1.3; text-transform: uppercase;
+  -webkit-text-stroke: 8px #1A1633; paint-order: stroke fill; }
+/* ô đã lộ (không bí ẩn): ảnh ứng dụng rõ ngay từ khung 0, chỉ tối dần ở đáy cho chữ thể loại */
+.tl-tile:not(.tl-tile-mystery) .tl-tile-img { filter: saturate(1.1); }
+.tl-tile:not(.tl-tile-mystery) .tl-tile-scrim { background: linear-gradient(180deg, rgba(26, 22, 51, 0.35) 0%, rgba(26, 22, 51, 0) 35%, rgba(26, 22, 51, 0.92) 78%); }
+/* số mục lẻ trên lưới 2 cột: ô cuối (thường là ô bí ẩn hạng 1) trải hết hàng, không để ô trống */
+.tl-grid-2 .tl-tile:last-child:nth-child(odd) { grid-column: span 2; }
+.tl-tile-mystery .tl-tile-img, .tl-mystery-big .tl-tile-img { filter: blur(18px) brightness(0.7); }
+.tl-tile-q { position: absolute; right: 16px; bottom: 0; font-weight: 900; font-size: 150px; line-height: 1; color: var(--accent); }
+.tl-lock { position: absolute; left: 20px; bottom: 20px; width: 48px; height: 38px; background: var(--text); border-radius: 6px; }
+.tl-lock::before {
+  content: ""; position: absolute; left: 8px; top: -26px; width: 32px; height: 32px;
+  border: 7px solid var(--text); border-bottom: 0; border-radius: 18px 18px 0 0;
+}
+.tl-tile-flash { position: absolute; inset: 0; border: 8px solid var(--accent); opacity: 0; }
+.tl-mystery-big { position: absolute; left: 0; right: 0; bottom: 0; height: 470px; overflow: hidden; background: var(--ground-2); opacity: 0; border: 8px solid var(--accent); }
+.tl-big-q { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 360px; line-height: 1; color: var(--accent); }
+.tl-lock-big { left: auto; right: 44px; bottom: 44px; width: 96px; height: 76px; border-radius: 10px; }
+.tl-lock-big::before { left: 16px; top: -52px; width: 64px; height: 64px; border-width: 14px; border-radius: 36px 36px 0 0; }
+
+/* ---------------- intro: lời hứa ---------------- */
+.tl-promise .tl-band { left: -220px; top: 930px; width: 1520px; height: 420px; background: #221C44; }
+.tl-pcards { display: flex; flex-direction: column; gap: 28px; }
+.tl-pcard { background: var(--ground-2); padding: 22px 36px 30px; border-left: 12px solid var(--accent); }
+.tl-pcard:nth-child(2) { margin-left: 70px; border-left-color: var(--accent-2); }
+.tl-pcard-label { font-weight: 600; font-size: 44px; line-height: 1.2; color: var(--text-dim); }
+.tl-pcard-value { font-weight: 900; font-size: 80px; line-height: 1.3; transform-origin: 0% 50%; }
+.tl-statement { margin-top: auto; font-weight: 900; font-size: var(--hook-px); line-height: 1.3; text-transform: uppercase; color: var(--accent); opacity: 0; }
+
+/* ---------------- outro ---------------- */
+.tl-outro .tl-band { left: -220px; top: 280px; width: 1520px; height: 900px; background: #211B42; }
+.tl-board { display: flex; flex-direction: column; gap: 10px; padding-right: 30px; }
+.tl-row { position: relative; display: flex; align-items: center; gap: 22px; height: 92px; padding: 0 24px; background: var(--ground-2); transform-origin: 0% 50%; }
+.tl-row-num { width: 120px; font-weight: 900; font-size: 64px; line-height: 1; color: var(--accent); }
+.tl-row-genre { flex: 1; min-width: 0; font-weight: 800; font-size: 44px; line-height: 1.2; white-space: nowrap; }
+.tl-row-hit { background: var(--accent); }
+.tl-row-hit .tl-row-num, .tl-row-hit .tl-row-genre { color: var(--ground); }
+.tl-question {
+  position: absolute; left: 0; right: 0; top: 170px;
+  font-weight: 900; font-size: 104px; line-height: 1.3; text-transform: uppercase; opacity: 0; transform-origin: 0% 50%;
+}
+.tl-brand { position: absolute; left: 0; right: 0; top: 230px; display: flex; flex-direction: column; gap: 34px; }
+.tl-wordmark { font-weight: 900; font-size: 124px; line-height: 1; letter-spacing: -0.02em; white-space: nowrap; opacity: 0; transform-origin: 0% 50%; }
+.tl-wordmark-hi { color: var(--accent); }
+.tl-cta { font-weight: 600; font-size: 52px; line-height: 1.2; color: var(--text-dim); opacity: 0; }
+
+/* outro có bảng: tựa to (on_screen_text, vd. "#10 APP STORE → #2") trên bảng hạng; outro.js đặt cao hàng, cỡ số, ảnh nhỏ
+   để bảng lấp phần cột còn lại (y 350–1165). Dòng sau của tựa (sau "→") màu accent. */
+.tl-outro-board .tl-board { padding-right: 0; gap: 14px; }
+.tl-headline { font-weight: 900; font-size: 116px; line-height: 1.3; text-transform: uppercase; letter-spacing: -0.01em;
+  opacity: 0; transform-origin: 0% 50%; }
+.tl-headline .gr-line:last-child { color: var(--accent); }
+.tl-row-thumb { position: relative; flex: 0 0 auto; overflow: hidden; border-radius: 10px; background: var(--ground); }
+.tl-row-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tl-row-ref { box-shadow: inset 0 0 0 8px var(--accent); }
+.tl-row-flash { position: absolute; inset: 0; border: 8px solid var(--text); opacity: 0; pointer-events: none; }

@@ -1,0 +1,37 @@
+/* Biến thiết kế của kênh – sinh từ templates/_shared/frame.md (bản tạm, làm lại khi có logo).
+   Đường dẫn font tính từ thư mục render/ (prepare_render.py chép _shared/ vào render/_shared/). */
+
+@font-face { font-family: "Be Vietnam Pro"; src: url("fonts/BeVietnamPro-Medium.ttf") format("truetype"); font-weight: 500; font-style: normal; }
+@font-face { font-family: "Be Vietnam Pro"; src: url("fonts/BeVietnamPro-SemiBold.ttf") format("truetype"); font-weight: 600; font-style: normal; }
+@font-face { font-family: "Be Vietnam Pro"; src: url("fonts/BeVietnamPro-ExtraBold.ttf") format("truetype"); font-weight: 800; font-style: normal; }
+@font-face { font-family: "Be Vietnam Pro"; src: url("fonts/BeVietnamPro-Black.ttf") format("truetype"); font-weight: 900; font-style: normal; }
+
+:root {
+  /* colors */
+  --ground: #1A1633;
+  --ground-2: #2A2350;
+  --text: #FFFFFF;
+  --text-dim: #C9C3E6;
+  --accent: #FFC23D;
+  --accent-2: #FF5C7A;
+  --outline: #000000;
+  --verdict-play: #34D27B;
+  --brand: #98BE45;      /* xanh lá lấy từ logo */
+  --brand-dark: #131B1D; /* đen của logo */
+  /* typography (px ở khung rộng 1080) */
+  --font: "Be Vietnam Pro", sans-serif;
+  --hook-px: 96px;
+  --rank-px: 260px;
+  --title-px: 84px;
+  --caption-px: 68px;
+  --fact-label-px: 36px;
+  --fact-value-px: 52px;
+  --source-px: 28px;
+  --stamp-px: 120px;
+  /* vùng an toàn */
+  --safe-top: 250px;
+  --safe-bottom: 450px;
+  --safe-right: 150px;
+  --safe-left: 60px;
+  --caption-center-y: 65%;
+}

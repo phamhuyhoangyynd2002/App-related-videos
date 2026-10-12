@@ -1,0 +1,126 @@
+/* Bố cục tier-board, khung dọc 1080×1920.
+   Tiêu đề bảng y 344–416 · bảng y 430–1170 (x 60–930) · dải hình y 560–1050 đè lên bảng
+   · phụ đề tâm ở 65% = 1248 · vùng ứng dụng che từ 1470.
+   Không đặt CSS transform ở phần tử được GSAP tween. */
+
+.gr-scene { color: var(--text); font-family: var(--font); z-index: 10; }
+
+/* nền lưới toàn khung (thay nền phẳng của appreel.css) */
+.gr-root-bg {
+  background-color: #0E1417;
+  background-image:
+    linear-gradient(rgba(120, 220, 210, 0.10) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(120, 220, 210, 0.10) 2px, transparent 2px);
+  background-size: 72px 72px;
+}
+
+/* ---------------- bảng xếp hạng (xuyên suốt) ---------------- */
+.tb-board-layer { z-index: 5; pointer-events: none; }
+/* khung chứa tiêu đề + bảng + icon; thu nhỏ về góc phải trên khi kể từng ứng dụng */
+/* gốc (930, 290): bảng mini 0,36 lần nằm y ≈ 309–607, đủ hàng D, trên dải hình (630) — khớp ORIGIN trong board.js */
+.tb-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 930px 290px; }
+.tb-title {
+  position: absolute; left: var(--safe-left); right: var(--safe-right); top: 344px; height: 72px;
+  display: flex; align-items: center; justify-content: flex-start;
+  font-family: var(--font); font-weight: 900; font-size: 60px; line-height: 1; text-transform: uppercase;
+  color: var(--accent); -webkit-text-stroke: 8px #000; paint-order: stroke fill; white-space: nowrap;
+}
+.tb-board {
+  position: absolute; left: var(--safe-left); width: 870px; top: 430px; height: 740px;
+  display: flex; flex-direction: column; gap: 6px;
+  background: #0A0A0C; padding: 6px; box-sizing: border-box;
+}
+.tb-row { position: relative; flex: 1; display: flex; background: #151518; }
+.tb-label {
+  width: 120px; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font); font-weight: 900; font-size: 58px; line-height: 1; color: #FFFFFF;
+  -webkit-text-stroke: 8px #000; paint-order: stroke fill;
+}
+.tb-flash { position: absolute; inset: 0; opacity: 0; background: #FFFFFF; }
+
+.tb-icon {
+  position: absolute; width: 100px; height: 100px; overflow: hidden;
+  border: 4px solid #FFFFFF; box-sizing: border-box; background: var(--ground-2);
+  display: flex; align-items: center; justify-content: center; opacity: 0;
+}
+.tb-icon img { width: 100%; height: 100%; object-fit: cover; }
+.tb-icon span {
+  font-family: var(--font); font-weight: 900; font-size: 30px; line-height: 1.05; color: var(--text);
+  text-align: center; padding: 4px; overflow-wrap: anywhere; max-width: 100%; box-sizing: border-box;
+}
+
+/* ---------------- cảnh ---------------- */
+.tb-strip {
+  position: absolute; left: 0; width: 1080px; top: 670px; height: 500px; overflow: hidden;
+  background: #000; opacity: 0;
+  box-shadow: 0 0 0 6px #000, 0 30px 60px rgba(0, 0, 0, 0.6);
+}
+.tb-strip img, .tb-strip video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tb-shot { opacity: 0; }
+
+.tb-name {
+  position: absolute; left: var(--safe-left); top: 400px; max-width: 520px;
+  padding: 12px 24px 16px; background: var(--accent); color: #111;
+  font-family: var(--font); font-weight: 900; font-size: 64px; line-height: 1.3; text-transform: uppercase;
+  opacity: 0; box-shadow: 8px 8px 0 #000;
+}
+.tb-facts { position: absolute; inset: 0; }
+/* ba vị trí thẻ quanh dải hình: trái trên, phải giữa, trái dưới */
+.tb-fact { position: absolute; }
+.tb-fact-p0 { left: var(--safe-left); top: 690px; }
+.tb-fact-p1 { right: var(--safe-right); top: 870px; }
+.tb-fact-p2 { left: var(--safe-left); top: 1060px; }
+.tb-fact {
+  background: #000; border: 4px solid var(--accent); padding: 8px 20px 10px; opacity: 0; box-shadow: 6px 6px 0 var(--brand);
+  font-family: var(--font); color: var(--text); white-space: nowrap;
+}
+.tb-fact-label { font-weight: 600; font-size: 28px; line-height: 1.1; color: var(--text-dim); }
+.tb-fact-value { font-weight: 800; font-size: 38px; line-height: 1.1; }
+
+/* hook và kết: băng chữ lớn đè giữa bảng */
+.tb-banner {
+  position: absolute; left: 0; width: 1080px; top: 600px; min-height: 360px;
+  display: flex; align-items: center; justify-content: center; box-sizing: border-box;
+  padding: 30px var(--safe-right) 30px var(--safe-left);
+  background: rgba(0, 0, 0, 0.82); opacity: 0;
+}
+.tb-banner-text {
+  font-family: var(--font); font-weight: 900; font-size: 104px; line-height: 1.3; text-transform: uppercase;
+  text-align: center; color: #FFFFFF; -webkit-text-stroke: 10px #000; paint-order: stroke fill;
+}
+.tb-banner-item { top: 660px; min-height: 280px; }
+/* ứng dụng không có ảnh: băng tên ở trên, thẻ xếp thành hàng dưới băng */
+.tb-nomedia .tb-fact-p0 { left: var(--safe-left); top: 975px; }
+.tb-nomedia .tb-fact-p1 { right: var(--safe-right); top: 975px; }
+.tb-nomedia .tb-fact-p2 { left: 300px; top: 1085px; }
+.tb-banner-text em { font-style: normal; color: var(--accent); }
+
+/* ---------------- vòng sửa 03/10/2026: hook có hình, lấp nửa dưới, hàng SSS ẩn khi trống ---------------- */
+.tb-strip { top: 630px; height: 560px; }
+.tb-cam { position: absolute; inset: 0; }
+/* hook: băng chữ trên, ảnh ứng dụng dưới, dải icon các ứng dụng đè mép dưới ảnh */
+.tb-banner-intro { top: 420px; min-height: 230px; height: 230px; padding-top: 10px; padding-bottom: 10px; background: rgba(0, 0, 0, 0.92); }
+.tb-strip-intro { top: 650px; height: 540px; }
+.tb-intro-icons { position: absolute; left: var(--safe-left); top: 1062px; display: flex; gap: 12px; z-index: 2; }
+.tb-intro-icon { width: 108px; height: 108px; border: 4px solid #FFFFFF; box-sizing: border-box; background: #000; box-shadow: 5px 5px 0 #000; overflow: hidden; }
+.tb-intro-icon img { width: 100%; height: 100%; object-fit: cover; }
+/* linh vật ở vùng dưới phụ đề, trong vùng an toàn (y ≤ 1470, x ≤ 930) */
+.tb-linhvat { position: absolute; width: 180px; height: 180px; object-fit: contain; left: 750px; top: 1288px;
+  transform-origin: 50% 90%; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55)); opacity: 0; }
+.tb-linhvat-intro { opacity: 1; }
+/* ---------------- vòng sửa 06/10/2026 ---------------- */
+/* thẻ số liệu: một ô cố định ở vùng trống dưới phụ đề (y 1312–1456, trong vùng an toàn), chữ ≥ 44/56px.
+   Thẻ mới đẩy thẻ cũ ra (scenes.js), không đè ảnh. Nhãn ≥ 44px, giá trị ≥ 56px (fitText không thu nhỏ hơn). */
+.tb-fact, .tb-fact-p0, .tb-fact-p1, .tb-fact-p2,
+.tb-nomedia .tb-fact-p0, .tb-nomedia .tb-fact-p1, .tb-nomedia .tb-fact-p2 { left: var(--safe-left); right: auto; top: 1312px; }
+.tb-fact { max-width: 870px; box-sizing: border-box; padding: 4px 20px 6px; }
+.tb-fact-label { font-size: 44px; line-height: 1.2; }
+.tb-fact-value { font-size: 56px; line-height: 1.14; } /* dấu chồng (Ô, Ố) không chạm chân chữ nhãn */
+/* linh vật nhỏ trong cảnh ứng dụng: góc phải dưới dải hình (y 1000–1180), nhường vùng dưới phụ đề cho thẻ */
+.tb-linhvat.tb-linhvat-strip { left: 750px; top: 1000px; }
+/* chỗ dành sẵn cho sticker gag khi bảng đã về giữa / ở cảnh kết: góc phải dưới phụ đề, không che hàng bảng */
+.tb-gag-slot { position: absolute; left: 750px; top: 1298px; width: 180px; height: 172px; pointer-events: none; }
+/* câu hỏi cuối: băng dưới bảng (bảng thu 0,72 lần, dịch xuống 6px: đáy y ≈ 930), trên phụ đề */
+.tb-banner.tb-banner-outro { top: 940px; min-height: 0; height: 248px; padding-top: 8px; padding-bottom: 8px; background: rgba(0, 0, 0, 0.9); }
+/* mỗi khung tối đa một hình logo/linh vật: logo-bug chỉ giữ chữ TÊN KÊNH (linh vật nhỏ, sticker, end-card mang hình) */
+.gr-logo-img { display: none; }
