@@ -12,6 +12,8 @@ Chuyển thể từ sub-skill `ideate` và `calendar` của claude-youtube, qua 
 
 - `kenh/ho-so-kenh.md` (chủ đề kênh, khán giả, lời hứa), `kenh/series.md`, `kenh/bai-hoc.md`.
 - Bản tin mới nhất `ke-hoach/ban-tin/<ngày>/ban-tin.md` và `ke-hoach/ban-tin/theo-doi.md` (skill `ban-tin-tuan`) nếu có: dùng làm tín hiệu chính, không quét lại các nguồn đó. Chưa có bản tin trong 7 ngày thì chạy `bang_xep_hang.py` để có bảng App Store mới.
+- Báo cáo soi kênh lớn mới nhất `ke-hoach/soi-kenh/<ngày>/bao-cao.md` và `ke-hoach/soi-kenh/theo-doi.md` (skill `soi-kenh-lon`) nếu có trong 7 ngày: ứng dụng nhiều kênh nước ngoài cùng nhắc, video vượt trội, dạng đang ăn. Chỉ đề xuất ứng dụng có ở Việt Nam.
+- Ý tưởng người làm video để dành: `ke-hoach/y-tuong-chu-de.md`; ưu tiên đưa vào danh sách khi hợp mùa vụ.
 - Tên các dự án trong `projects/` 30 ngày gần nhất, để không trùng chủ đề.
 - `docs/danh-gia-thi-truong-pc-va-ung-dung-2026-10-12.md` mục 6: các dạng nội dung nước ngoài có mà Việt Nam ít.
 - `docs/tham-khao-kenh-game/phan-tich-kenh-mau-2026-09-30.md` mục 7: công thức đặt tên chủ đề dễ phổ cập, bảng chọn tương tác chính (rút từ kênh game, dùng được cho ứng dụng).

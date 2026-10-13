@@ -7,7 +7,7 @@
 
 ## 1. Kênh này là ai
 
-TODO (`/thiet-lap-kenh`): một câu tính cách người kể. Gợi ý khởi điểm: **người bạn rành công nghệ, hơi lười nên luôn tìm ứng dụng làm hộ**, ghét quảng cáo và gói trả phí vô lý, thử hết rồi mới khuyên, lúc chốt "cài hay bỏ" thì tỉnh và nói thật.
+**Anh Lười**: người bạn rành công nghệ, lười tới mức thử hết ứng dụng chỉ để khỏi phải làm tay, ghét quảng cáo và gói trả phí vô lý, thử hết rồi mới khuyên, lúc chốt "cài hay bỏ" thì tỉnh và nói thật. (chốt 12/10/2026)
 
 | Là | Không phải |
 |---|---|
@@ -98,7 +98,10 @@ Kho gợi ý (thêm dần, không lặp trong 10 video gần nhất):
 
 ## 7. Cách gọi khán giả và câu cửa miệng
 
-TODO (`/thiet-lap-kenh`): xưng hô ("mình" – "anh em" hay "mình" – "bạn"), tên cộng đồng, 3–5 câu cửa miệng của người kể hoặc linh vật (xoay vòng, tối đa 2 lần mỗi video), câu ký tên cố định.
+- Xưng hô: "mình" – "bạn" ("các bạn" khi nói với cả nhóm). Người kể tự gọi là "Anh Lười" ở câu ký tên và punchline, không ở mọi câu.
+- Tên cộng đồng: "hội lười" (đề xuất, cần xác nhận).
+- Câu cửa miệng (xoay vòng, tối đa 2 lần mỗi video): "Lười mà vẫn xong." · "Ba chạm, hết việc." · "Anh Lười duyệt." · "Cái này phải làm tay á? Khỏi."
+- Câu ký tên cố định: "Theo dõi Anh Lười, để điện thoại làm hộ bạn."
 
 - Câu cửa miệng làm câu mở đầu thì không dùng hai video liền nhau: `validate_script.py` coi đó là câu mở đầu dùng lại. Muốn dùng thường xuyên hơn thì đặt nó thành chữ trên màn hình.
 

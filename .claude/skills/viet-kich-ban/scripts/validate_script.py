@@ -209,7 +209,7 @@ def main() -> int:
     scenes = data.get("scenes") or []
     if not scenes:
         errors.append("'scenes' rỗng")
-    rate = rate_factor((data.get("voice") or {}).get("rate", "+10%" if fmt == "vertical" else "+0%"))
+    rate = rate_factor((data.get("voice") or {}).get("rate", "+40%" if fmt == "vertical" else "+0%"))
     total = 0.0
     ranks = []
     verdict_count = 0
@@ -387,6 +387,13 @@ def main() -> int:
                 elif len(gnorm.split()) >= 2 and gnorm in norm_narr:
                     warnings.append(f"{tag}: gag '{kind}' «{gtext}» nhắc lại lời đọc (phụ đề đã hiện); "
                                     f"đổi sang gag giữ hình ứng dụng (zoom-kich-tinh, sticker, dau-chu)")
+            if kind == "dau-chu":
+                # template (gags.js) chỉ dựng đẹp tối đa 4 chữ; 13/10/2026 ba gag 5 chữ bị cảnh báo lúc render
+                dtext = gag.get("text") or ""
+                dtext = " ".join(dtext) if isinstance(dtext, list) else str(dtext)
+                dwords = [w for w in re.sub(r"[^\w\s]", " ", dtext).split() if w]
+                if len(dwords) > 4:
+                    warnings.append(f"{tag}: gag 'dau-chu' «{dtext}» dài {len(dwords)} chữ, tối đa 4 chữ")
             if kind == "rung":
                 frame_hits += 1
             if kind in KIEU_MAX:

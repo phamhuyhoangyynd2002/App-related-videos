@@ -19,7 +19,7 @@
 | Độ dài | Dọc: bản đầy đủ 2–3 phút, 5–7 mục (top-list, tier-list); bản nhanh 13–25 giây (một ứng dụng, một mẹo, một tin); bản gọn 45–60 giây khi người dùng chọn. Bản dài 3–5 phút chỉ khi người dùng yêu cầu, không bao giờ quá 5 phút. Ngang: 3–8 phút |
 | Chế độ | `cong-tac` (dừng đủ 4 điểm), trừ khi `kenh/ho-so-kenh.md` hoặc người dùng chọn `tu-dong` |
 | Độ lầy | Theo `kenh/ho-so-kenh.md` (thang ở `kenh/cam-nang-phong-cach.md`); mức 1 cho tin có yếu tố pháp lý, bảo mật, lừa đảo, sự cố thật |
-| Giọng đọc | `vi-VN-HoaiMyNeural`, tốc độ `+10%` cho video dọc, `+0%` cho video ngang |
+| Giọng đọc | `vi-VN-NamMinhNeural` (giọng nam, hợp "Anh Lười"), tốc độ `+40%` cho video dọc (chốt 13/10/2026, kèm rút nghỉ 0,17 giây: khoảng 4,1 âm tiết/giây), `+0%` cho video ngang. Tên ứng dụng đọc theo `kenh/phat-am.json` |
 | Nhạc nền | **Hỏi người dùng ở DỪNG 2** (chốt 29/09/2026): đề xuất 2–3 bài trong `music/` hợp tâm trạng video (bảng gợi ý cuối `music/GIAY-PHEP.md`), ưu tiên bài vui nhộn, nhịp nhanh. Chế độ `tu-dong`: chọn bài đầu tiên của nhóm hợp tâm trạng. Trộn sau khi render, tự giảm âm lượng khi có lời đọc |
 | Ngày của dự án | Ngày hiện tại, dạng `YYYY-MM-DD` |
 

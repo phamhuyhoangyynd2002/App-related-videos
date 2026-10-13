@@ -15,7 +15,7 @@ python3 .claude/skills/long-tieng/scripts/tts_edge.py <thư mục dự án> [--v
 ```
 
 - **Dịch vụ**: kênh có kiếm tiền phải dùng `--provider azure` (Azure AI Speech, dịch vụ chính thức; gói F0 miễn phí 500.000 ký tự/tháng; cần `pip install azure-cognitiveservices-speech` và `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION` trong môi trường). Có khoá thì script tự chọn Azure. Edge TTS là dịch vụ không chính thức, Microsoft khuyến cáo dùng thương mại có thể vi phạm điều khoản, nên chỉ dùng để làm nháp; `kiem_tra_ban_quyen.py` sẽ chặn video dùng Edge nếu hồ sơ kênh ghi có kiếm tiền.
-- Giọng có sẵn (cả hai dịch vụ): `vi-VN-HoaiMyNeural` (nữ, mặc định), `vi-VN-NamMinhNeural` (nam). Không nhân bản giọng người thật.
+- Giọng có sẵn (cả hai dịch vụ): `vi-VN-NamMinhNeural` (nam, mặc định của kênh từ 13/10/2026), `vi-VN-HoaiMyNeural` (nữ). Không nhân bản giọng người thật.
 - Chỉ sửa lời vài cảnh thì dùng `--only`. Đổi giọng hoặc tốc độ thì tạo lại tất cả.
 - Kết quả `timing` của mỗi cảnh trong `audio/subtitles.json`:
   - `tts`: mốc từng từ khớp với lời gốc. Tốt.
@@ -50,7 +50,12 @@ Dùng khi hồ sơ kênh chọn giọng của dịch vụ không có API trong d
    - Test bằng file giả (ghép giọng Edge có sẵn mốc từ), ngày 01/10/2026: mốc từ lệch trung vị 0,02 giây, 90% số từ lệch dưới 0,1 giây.
 3. **Bản quyền**: bản miễn phí của Vbee chỉ cho dùng cá nhân, học tập; gói trả phí mới có quyền thương mại. `kiem_tra_ban_quyen.py` cảnh báo (kênh chưa kiếm tiền) hoặc chặn (kênh kiếm tiền) khi `kenh/bang-chung/` chưa có file bằng chứng gói trả phí có tên dịch vụ trong tên file.
 
-**Kiểm tra tai nghe**: nếu tên ứng dụng bị đọc sai, thêm trường `pronunciation` cho cảnh đó trong `script.json` (ví dụ `"pronunciation": "nâu sần"` cho Notion), rồi tạo lại với `--only`. Nhiều tên trong một cảnh: `"Tên A: phiên âm; Tên B: phiên âm"`, tên viết đúng như trong `narration`.
+**Phát âm tên ứng dụng (quy tắc cứng, từ 13/10/2026)**: không tự nghĩ phiên âm. Trước bước giọng đọc, mọi tên ứng dụng trong lời đọc phải có trong từ điển kênh `kenh/phat-am.json`; `tts_edge.py` tự dùng từ điển này (phụ đề vẫn hiện tên gốc). Tên chưa có thì chấm bằng:
+```bash
+python3 .claude/skills/long-tieng/scripts/thu_phat_am.py "<Tên>" "<ứng viên 1>" "<ứng viên 2>" ... --ghi
+```
+Script cho giọng của kênh đọc từng ứng viên (và tên gốc), nhận dạng lại bằng Whisper **tiếng Anh**, chọn cách được nghe ra gần tên gốc nhất. Ứng viên tốt thường tách âm bằng gạch nối để giữ phụ âm cuối tiếng Anh: "pắc-poi-n" (PackPoint, 0,80; "pắc poin" chỉ 0,47), "pô-lờ-x-tép" (Polarsteps, 0,95), "oan-đờ-lóg" (Wanderlog). Đưa 4–6 ứng viên khác kiểu (tách gạch, đổi thanh, thêm phụ âm cuối). Bằng điểm thì giữ tên gốc. Điểm dưới 0,6 thì nghe lại bằng tai; người làm video chốt bằng tai thì đặt `"khoa": true` trong từ điển. Vì sao: phiên âm tự nghĩ ("pắc poin", "xét tồ ắp") bị chê đọc tên không chuẩn.
+Trường `pronunciation` của cảnh chỉ để ghi đè từ điển cho riêng video đó (ví dụ `"pronunciation": "nâu sần"` cho Notion), rồi tạo lại với `--only`. Nhiều tên trong một cảnh: `"Tên A: phiên âm; Tên B: phiên âm"`, tên viết đúng như trong `narration`.
 
 **Nghe lại (bắt buộc, quy tắc cứng, sau mỗi lần tạo hoặc nhập giọng, trước `rut_nghi.py`)**:
 ```bash
@@ -62,10 +67,10 @@ Vì sao: ngày 06/10/2026, `pronunciation` ghi dạng nhiều tên làm TTS đ�
 ### Rút quãng nghỉ (chạy sau khi tạo giọng, trước timeline)
 
 ```bash
-python3 .claude/skills/long-tieng/scripts/rut_nghi.py <thư mục dự án> [--toi-da 0.3] [--giu 0.22] [--giu-punchline 0.45] [--only 2,4] [--thu]
+python3 .claude/skills/long-tieng/scripts/rut_nghi.py <thư mục dự án> [--toi-da 0.2] [--giu 0.17] [--giu-punchline 0.4] [--dau 0.05] [--duoi 0.15] [--only 2,4] [--thu]
 ```
 
-Giọng TTS nghỉ đều khoảng 0,6 giây sau mỗi dấu chấm. Video 05/10/2026 có quãng nghỉ chiếm 25% thời lượng, tốc độ thực chỉ 3,3 âm tiết/giây (mục tiêu 4,5–5). Script cắt phần im lặng thừa ở giữa mỗi quãng dài hơn `--toi-da`, giữ `--giu` giây; quãng ngay sau dấu "…" giữ `--giu-punchline` giây (đó là chỗ ngừng trước câu đùa). Mốc từng từ được dời theo. Cảnh đã rút sẽ bị bỏ qua khi chạy lại; tạo lại giọng một cảnh (`tts_edge.py --only`) thì rút lại cảnh đó. Mặc định chạy cho mọi video dọc; `--thu` để xem trước số giây bớt được.
+Giọng TTS nghỉ đều khoảng 0,6 giây sau mỗi dấu chấm. Video 05/10/2026 có quãng nghỉ chiếm 25% thời lượng, tốc độ thực chỉ 3,3 âm tiết/giây (mục tiêu 4,5–5). Script cắt phần im lặng thừa ở giữa mỗi quãng dài hơn `--toi-da`, giữ `--giu` giây; quãng ngay sau dấu "…" giữ `--giu-punchline` giây (đó là chỗ ngừng trước câu đùa). Từ 13/10/2026: TTS đọc liền qua "…" thì script **chèn** im lặng cho đủ `--giu-punchline`; im lặng đầu, cuối mỗi file cắt còn `--dau`, `--duoi` (trước đây gần 1 giây mỗi lần chuyển cảnh). Mặc định đi cùng giọng NamMinh +40% của hồ sơ kênh: cả video khoảng 4,1 âm tiết/giây (người làm video chê 3,3 chậm, 4,8 quá nhanh). Mốc từng từ được dời theo. Cảnh đã rút sẽ bị bỏ qua khi chạy lại; tạo lại giọng một cảnh (`tts_edge.py --only`) thì rút lại cảnh đó. Mặc định chạy cho mọi video dọc; `--thu` để xem trước số giây bớt được.
 
 ## Bước 4 – Timeline
 

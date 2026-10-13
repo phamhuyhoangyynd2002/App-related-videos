@@ -20,10 +20,10 @@
   box-shadow: inset 0 0 200px 30px rgba(0, 0, 0, 0.45); }
 
 /* dấu chữ (dau-chu): chữ đóng dấu nghiêng, đè góc/mép khung hình ứng dụng; gags.js đặt left/top, xoay bằng GSAP */
-.gr-gag-stamp { position: absolute; left: 90px; top: 700px; padding: 10px 30px 14px; background: #FFC23D;
+.gr-gag-stamp { position: absolute; left: 90px; top: 700px; padding: 10px 30px 14px; background: #FFD84D;
   border: 10px solid #000; border-radius: 16px; box-shadow: 10px 12px 0 rgba(0, 0, 0, 0.55), 0 18px 34px rgba(0, 0, 0, 0.45);
   transform-origin: 50% 50%; opacity: 0; }
-.gr-gag-stamp.is-green { background: #98BE45; }
+.gr-gag-stamp.is-green { background: #6FE3C1; }
 .gr-gag-stamp-text { font-weight: 900; font-size: 104px; line-height: 1.25; color: #111; white-space: nowrap;
   text-transform: uppercase; width: max-content; }
 /* chữ to (chu-to, dong-bang): khối trong vùng an toàn ngang (trái 60px, phải chừa 150px), tâm x 495; gags.js co chữ
@@ -118,7 +118,7 @@
   font-weight: 900; font-size: 56px; line-height: 1.25; color: #FFFFFF; white-space: nowrap; text-transform: uppercase;
   width: max-content; box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.55); }
 .gr-gag-combo-row { display: flex; align-items: baseline; gap: 6px; margin-top: -6px; font-weight: 900; line-height: 1;
-  color: #FFC23D; -webkit-text-stroke: 14px #000; paint-order: stroke fill; }
+  color: #FFD84D; -webkit-text-stroke: 14px #000; paint-order: stroke fill; }
 .gr-gag-combo-x { font-size: 110px; }
 .gr-gag-combo-nums { display: inline-grid; font-size: 190px; }
 .gr-gag-combo-n { grid-area: 1 / 1; opacity: 0; transform-origin: 50% 70%; }
@@ -133,8 +133,8 @@
 .gr-gag-slider-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 12px; background: #FFFFFF;
   box-shadow: 0 0 0 4px #000, 0 0 30px rgba(0, 0, 0, 0.6); }
 .gr-gag-slider-knob { position: absolute; left: -32px; top: 50%; width: 76px; height: 76px; margin-top: -38px;
-  border-radius: 50%; background: #FFC23D; border: 8px solid #000; box-sizing: border-box; }
+  border-radius: 50%; background: #FFD84D; border: 8px solid #000; box-sizing: border-box; }
 .gr-gag-slider-tag { position: absolute; left: 18px; top: 18px; padding: 4px 18px 8px; background: #000;
   font-weight: 900; font-size: 56px; line-height: 1.25; color: #FFFFFF; white-space: nowrap; text-transform: uppercase;
   width: max-content; opacity: 0; }
-.gr-gag-slider-tag.is-right { left: auto; right: 18px; background: #FFC23D; color: #111; }
+.gr-gag-slider-tag.is-right { left: auto; right: 18px; background: #FFD84D; color: #111; }

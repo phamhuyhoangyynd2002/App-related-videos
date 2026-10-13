@@ -124,6 +124,15 @@ Luật (validator và `build_timeline.py` cảnh báo):
 - Đặt kiểu ở nhịp có `cue`, không đặt ở nhịp đầu cảnh. Chừa đủ thời gian: đập zoom cách nhịp ảnh trước ≥ 0,85s và diễn ≥ 1s; cắt nhảy ≥ 1,3s; chia ô ≥ 1,8s và không có thẻ bật lên trong lúc diễn.
 - Kiểu hình không thay gag: vẫn cần ít nhất một nhịp cười mỗi mục.
 
+## Bài học từ phản hồi người làm video (13/10/2026, video 4 app đi chơi nhóm)
+
+Người làm video chê bản nháp: đầu video khó thu hút, giữa video nhàm, nhịp hình dày quá khi giọng nhanh. Quy tắc rút ra:
+- **Hook top-list khi ảnh ứng dụng là ảnh dọc**: cảnh intro có 2–3 nhịp `screenshot:N` của ứng dụng hạng 1 (manifest gán cảnh 1 cho ứng dụng đó). Template hiện màn hình thật trong khung điện thoại từ giây 0, tự che tên bằng nhãn `hook_label` (mặc định "APP CUỐI ?"); mỗi nhịp là một lần đổi hình. Không để intro chỉ có chữ.
+- **Mật độ nhịp theo tốc độ đọc**: ở tốc độ mặc định (khoảng 4 âm tiết/giây) mỗi nhịp hình 1,3–2 giây; không nhịp nào dưới 0,9 giây (kiểu lật thẻ, đập zoom không kịp diễn). Video 45–60 giây khoảng 25–32 nhịp.
+- **Linh vật mỗi mục một lần** ở đúng punchline: gag `sticker`, `asset` theo bảng biểu cảm ở `kenh/nhan-vat.md` (gói trả phí → `linh-vat-soc-gia`, app xịn bất ngờ → `linh-vat-tinh-ngu`, chờ mãi → `linh-vat-ngu-gat`, "Anh Lười duyệt" → `linh-vat-duyet`, chưa có file thì `linh-vat-luoi-cham`). Cách gag khác và nhịp lật thẻ ít nhất 1,5 giây; không đặt sticker ở cảnh outro của top-list (bị đẩy xuống góc phải dưới, lấn vùng an toàn).
+- `dau-chu` tối đa 4 chữ (template cảnh báo); thêm sticker thì bớt sfx của gag chữ gần đó để tổng sfx không quá dày (khoảng 1 sfx mỗi 5 giây).
+- Không tự viết `pronunciation`: tên ứng dụng đọc theo `kenh/phat-am.json` (skill `long-tieng`, `thu_phat_am.py`).
+
 ## Hiệu ứng âm thanh
 
 Mỗi `sfx` phải gắn với một sự kiện nhìn thấy, đặt `cue` đúng từ đó. Bộ âm thanh của kênh (tự tạo, `sfx/GIAY-PHEP.md`):

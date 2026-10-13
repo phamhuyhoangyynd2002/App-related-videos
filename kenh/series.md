@@ -13,6 +13,8 @@
 - Template: top-list · Số mục: 4 · Độ dài: 45–60 giây (bản gọn) hoặc 2 phút
 - Góc nhìn: mỗi ứng dụng giải một việc cụ thể ai cũng gặp, có bản miễn phí dùng được, có trên cửa hàng ở Việt Nam
 - Chọn ứng dụng: chưa nằm trong top 50 miễn phí App Store VN (`/ban-tin-tuan` có bảng), điểm ≥ 4,3, có ít nhất một kết quả "ồ" quay được trong 3 giây
+- **Phép thử ngách (người làm video chốt 12–13/10/2026, sau khi chê hai bộ đầu)**: mỗi ứng dụng phải trả lời "không" cho câu "Google, Zalo, ChatGPT/Gemini, Google Photos/Lens/Dịch/Maps hay ứng dụng có sẵn trên máy có làm được việc này gọn như vậy không?". Bị chê: ứng dụng trợ năng (giá trị thấp với người thường), ứng dụng quá quen hoặc Google làm thay được (Papago, xoá vật thể, làm nét ảnh). Được khen: ứng dụng cho một nhóm người dùng nhỏ với việc cụ thể (chia tiền nhóm đi chơi, lịch trình nhóm, luyện đàm thoại). Gom theo một chủ đề tình huống (ví dụ tổ chức đi chơi theo nhóm: soạn đồ → lịch trình → lưu hành trình → chia tiền) dễ xem hơn ghép lẻ. Không bắt buộc có AI
+- Ý tưởng để dành cho tập sau: `ke-hoach/y-tuong-chu-de.md` (chăm sóc người lớn tuổi: Medisafe)
 - Hook ưu tiên (xoay vòng): ket-qua-truoc → loi-hua → cau-hoi
 - Cấu trúc cảnh: intro (kết quả "ồ" nhất của cả video ở giây 0, che tên) → 4 item (việc cần làm → clip dùng thử → kết quả → một điểm trừ) → outro (câu hỏi "bạn đang dùng ứng dụng nào cho việc này")
 - Con dấu: ở mục cuối (mạnh nhất)

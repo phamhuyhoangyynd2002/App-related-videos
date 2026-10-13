@@ -1,0 +1,14 @@
+{
+  "_ghi_chu": "Danh sách kênh theo dõi. Lấy từ docs/danh-gia-thi-truong-pc-va-ung-dung-2026-10-12.md mục 4.2 (đã đo 12/10/2026). Thêm kênh: thêm một dòng; youtube dùng mã kênh UC..., tiktok dùng tên @ không có dấu @. Tắt kênh: đặt \"tat\": true, không xoá để giữ lịch sử.",
+  "kenh": [
+    {"ten": "Hayls World", "nen_tang": "youtube", "id": "UCIxLxlan8q9WA7sjuq6LdTQ", "tab": ["shorts", "videos"], "vi_sao": "N ứng dụng ít người biết; Shorts trung vị 373.000"},
+    {"ten": "HowToMen", "nen_tang": "youtube", "id": "UCqjVP9gAanUGFgTA5BRDvyA", "tab": ["videos", "shorts"], "vi_sao": "Series tháng Top 15 Best Android Apps"},
+    {"ten": "Andrew Ethan Zeng", "nen_tang": "youtube", "id": "UCgDqL4yzXb4BflimZaxL4Vg", "tab": ["shorts", "videos"], "vi_sao": "Ứng dụng iPhone độc đáo; Shorts trung vị 163.500"},
+    {"ten": "Jeff Su", "nen_tang": "youtube", "id": "UCwAnu01qlnVg1Ai2AbtTMaA", "tab": ["videos", "shorts"], "vi_sao": "Công cụ năng suất, AI"},
+    {"ten": "Trakin Tech", "nen_tang": "youtube", "id": "UCEPL07qzVsOcHd3sMUws65g", "tab": ["shorts"], "vi_sao": "Công nghệ tổng hợp, có video ứng dụng; chỉ xem Shorts"},
+    {"ten": "Matty McTech", "nen_tang": "tiktok", "id": "setupspawn", "vi_sao": "Trang web, công cụ hữu ích; 5,2 triệu theo dõi"},
+    {"ten": "Tyler Morgan", "nen_tang": "tiktok", "id": "hitomidocameraroll", "vi_sao": "Ứng dụng, mẹo iPhone; trung vị 245.100"},
+    {"ten": "Valstech", "nen_tang": "tiktok", "id": "valstechtalk", "vi_sao": "Ứng dụng iPhone nên có; trung vị 208.950"},
+    {"ten": "Enrique Barrón", "nen_tang": "tiktok", "id": "soyenriquebarron", "vi_sao": "Ứng dụng iPhone (tiếng Tây Ban Nha), có video tài trợ"}
+  ]
+}

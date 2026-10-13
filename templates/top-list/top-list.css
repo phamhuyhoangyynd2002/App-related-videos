@@ -88,20 +88,37 @@
 .tl-tall .tl-fact-value { font-size: 56px; }
 .tl-clip { position: absolute; object-fit: cover; z-index: 2; }
 
-/* mp: ảnh dọc (khung điện thoại của ứng dụng). Hạng, tựa, tên ứng dụng, thẻ ở cột trái 470px; ảnh cao bên phải giữ
-   trọn khung dọc (tỉ lệ ~0,46), không cắt ngang. Cột kéo tới y 1180 (phụ đề bắt đầu ~1198). */
-.tl-mp .tl-col { bottom: 740px; }
-.tl-mp .tl-band { left: -220px; top: 760px; width: 1520px; height: 640px; background: var(--ground-2); }
-.tl-mp .tl-head { width: 470px; flex-direction: column; align-items: flex-start; gap: 10px; }
-.tl-mp .tl-info { width: 100%; padding-bottom: 0; gap: 6px; }
-.tl-mp .tl-rank { font-size: 200px; }
+/* mp: ảnh dọc (khung điện thoại của ứng dụng). Đổi 13/10/2026 (kênh ứng dụng: ảnh gần như luôn dọc, người làm video
+   muốn thấy gần trọn màn hình điện thoại): hàng trên rộng hết cột là hạng + tựa + tên ứng dụng; dưới là cột thẻ 340px
+   bên trái và điện thoại cao tới đáy vùng an toàn (y 1470) bên phải, ~480×900 (trước: 378×830, chữ tựa bị ảnh che).
+   Phụ đề (~y 1200–1300) nằm đè lên phần dưới ảnh, có viền chữ nên vẫn đọc được. top của khung đặt trong fit (item.js). */
+.tl-mp .tl-col { top: 350px; bottom: 450px; gap: 14px; }
+.tl-mp .tl-band { left: -220px; top: 620px; width: 1520px; height: 900px; background: var(--ground-2); }
+.tl-mp .tl-head { width: 100%; flex-direction: row; align-items: flex-end; gap: 22px; }
+.tl-mp .tl-info { flex: 1; min-width: 0; padding-bottom: 6px; gap: 6px; }
+.tl-mp .tl-rank { font-size: 170px; }
 .tl-mp .tl-genre { font-size: 72px; }
 .tl-mp .tl-rep-name { font-size: 48px; }
-.tl-mp .tl-facts { width: 470px; gap: 8px; }
+.tl-mp .tl-facts { width: 340px; gap: 8px; }
 .tl-mp .tl-fact { padding: 6px 18px 8px; }
-.tl-mp .tl-col { gap: 14px; }
 .tl-mp .tl-fact-label, .tl-mp .tl-fact-value { line-height: 1.15; }
-.tl-mp .tl-frame { position: absolute; left: 492px; right: 0; top: 0; bottom: 0; border-radius: 18px; }
+/* cột thẻ hẹp: giá trị xuống dòng theo từ thay vì tràn dưới khung điện thoại ("có mua trong app" bị cắt, 13/10/2026);
+   !important vì fit() đặt nowrap inline cho bố cục thẻ ngang */
+.tl-mp .tl-fact-value { width: auto; max-width: 100%; }
+.tl-mp .tl-fact-value, .tl-mp .tl-fact-value * { white-space: normal !important; }
+/* khung điện thoại mp. 13/10/2026: viền bạc hà mảnh cùng kiểu điện thoại hook (mép không lẫn vào nền khi nền quét màu);
+   transform-origin cho lúc điện thoại vào cảnh nghiêng rồi đứng thẳng (item.js) */
+.tl-mp .tl-frame { position: absolute; left: 360px; right: 0; top: 260px; bottom: 0; border-radius: 22px; transform-origin: 50% 85%;
+  box-shadow: 0 0 0 3px rgba(111, 227, 193, 0.6), 0 24px 60px rgba(0, 0, 0, 0.45); }
+/* Khe ảnh của điện thoại dọc (phone.js, 13/10/2026): phủ kín màn hình, cắt phần tràn. Chuyển ảnh (vuốt, cuộn, mở app)
+   tween khe; zoom, cuộn, đập trong ảnh tween ảnh (transform-origin 0 0 do placeCrop đặt). */
+.tl-slot { position: absolute; inset: 0; overflow: hidden; transform-origin: 50% 40%; }
+/* màn mở app: icon ứng dụng như lúc vừa chạm mở (trước đây icon bị phóng lấp khung, vỡ hình); nền sáng hơn nền cảnh.
+   Tâm icon ở 40% chiều cao (trên dải phụ đề), trùng gốc phóng của khe (transform-origin 50% 40%) nên ảnh kế tiếp bung
+   ra đúng từ icon. margin-top -27% tính theo bề rộng khe = nửa cạnh icon (54% bề rộng). */
+.tl-splash { background: #2A4A70; }
+.tl-splash-icon { position: absolute; left: 23%; top: 40%; width: 54%; height: auto; aspect-ratio: 1 / 1; margin-top: -27%;
+  object-fit: cover; border-radius: 22%; box-shadow: 0 18px 46px rgba(0, 0, 0, 0.45); }
 /* mp: ô phóng to cho nhịp có crop (shots[].crop) – phá khung điện thoại, rộng hết cột, từ dưới tên ứng dụng (top đặt
    trong fit) tới đáy cột; che tạm thẻ cột trái trong lúc hiện. Ảnh đặt bằng placeCrop (appreel.js). */
 .tl-zoom {
@@ -157,6 +174,31 @@
 .tl-big-q { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 360px; line-height: 1; color: var(--accent); }
 .tl-lock-big { left: auto; right: 44px; bottom: 44px; width: 96px; height: 76px; border-radius: 10px; }
 .tl-lock-big::before { left: 16px; top: -52px; width: 64px; height: 64px; border-width: 14px; border-radius: 36px 36px 0 0; }
+
+/* ---------------- intro: hook điện thoại (ảnh dọc, intro.js hookPhone, 13/10/2026) ----------------
+   Chữ hook + sub trên cùng; dưới là điện thoại lớn giữa vùng an toàn, đáy ≈ y 1454 (cỡ đặt trong fit theo tỉ lệ ảnh,
+   rộng ~530px > khung mp 510px). Nhãn "APP CUỐI ?" che đỉnh màn (tên ứng dụng); dock icon trồi lên ở đáy màn, dưới dải
+   phụ đề (~y 1198–1298). Phụ đề nằm đè lên điện thoại, có viền chữ nên vẫn đọc được. */
+.tl-hookp .tl-col { bottom: 450px; gap: 14px; }
+.tl-hk-stage { position: relative; flex: 1 1 auto; min-height: 0; }
+.tl-hk-phone { position: absolute; left: 0; top: 0; width: 520px; height: 760px; transform-origin: 50% 60%; }
+.tl-hk-kick { position: absolute; inset: 0; border-radius: 46px; background: #0B1524;
+  box-shadow: 0 0 0 3px rgba(111, 227, 193, 0.6), 0 30px 70px rgba(0, 0, 0, 0.55); }
+.tl-hk-screen { position: absolute; inset: 10px; overflow: hidden; border-radius: 36px; background: var(--ground-2); }
+.tl-hk-label { position: absolute; left: 0; right: 0; top: 0; z-index: 3; display: flex; align-items: center; justify-content: center;
+  gap: 16px; padding: 4px 20px 2px; background: #0B1524; }
+.tl-hk-label-text { font-weight: 900; font-size: 56px; line-height: 1.3; text-transform: uppercase; color: var(--text); white-space: nowrap; }
+.tl-hk-q { display: inline-block; font-weight: 900; font-size: 92px; line-height: 1; color: var(--accent); }
+.tl-hk-dock { position: absolute; left: 10px; right: 10px; bottom: 10px; z-index: 3; display: flex; justify-content: center; gap: 12px;
+  padding: 10px; border-radius: 30px; background: rgba(11, 21, 36, 0.92); opacity: 0; }
+.tl-hk-chip { position: relative; flex: 0 0 auto; width: 112px; height: 112px; overflow: hidden; border-radius: 24px; background: var(--ground); }
+.tl-hk-chip-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tl-hk-chip-num { position: absolute; left: 8px; top: 0; font-weight: 900; font-size: 44px; line-height: 1.2; color: var(--accent);
+  -webkit-text-stroke: 8px #0B1524; paint-order: stroke fill; }
+.tl-hk-chip-mystery { background: var(--ground-2); box-shadow: inset 0 0 0 6px var(--accent); }
+.tl-hk-chip-q { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-end; padding: 0 14px 6px 0;
+  font-weight: 900; font-size: 76px; line-height: 1; color: var(--accent); }
+.tl-hk-chip-flash { position: absolute; inset: 0; border: 6px solid var(--text); border-radius: 24px; opacity: 0; }
 
 /* ---------------- intro: lời hứa ---------------- */
 .tl-promise .tl-band { left: -220px; top: 930px; width: 1520px; height: 420px; background: #221C44; }

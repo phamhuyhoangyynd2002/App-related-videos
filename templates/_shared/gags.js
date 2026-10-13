@@ -320,7 +320,7 @@
        ≤ 28% diện tích khung hình (hình ứng dụng còn thấy ≥ 70%). Tối đa 4 chữ (dài hơn vẫn dựng, ghi console.warn).
        Đập vào scale 1.4→1 trong 0,15s, xong đúng `at`, giữ tới `end`. Chỗ đặt: các góc/mép khung, ưu tiên vắt qua mép
        trên/dưới, không đè data-gag-avoid (tựa, thẻ), phụ đề, logo-bug; trong vùng an toàn. g.color = "xanh" thì nền
-       xanh #98BE45, không thì luân phiên vàng #FFC23D / xanh theo thứ tự gag. */
+       xanh #6FE3C1, không thì luân phiên vàng #FFD84D / xanh theo thứ tự gag. */
     "dau-chu": function (L, g, tl, ctx) {
       var text = textOf(g);
       if (text.split(/\s+/).filter(Boolean).length > 4) console.warn("gags.js: dau-chu quá 4 chữ: " + text);

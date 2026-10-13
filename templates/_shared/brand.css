@@ -8,16 +8,16 @@
 
 :root {
   /* colors */
-  --ground: #1A1633;
-  --ground-2: #2A2350;
+  --ground: #132238;
+  --ground-2: #1F3653;
   --text: #FFFFFF;
-  --text-dim: #C9C3E6;
-  --accent: #FFC23D;
-  --accent-2: #FF5C7A;
+  --text-dim: #B8C7DA;
+  --accent: #FFD84D;
+  --accent-2: #FF7A59;
   --outline: #000000;
-  --verdict-play: #34D27B;
-  --brand: #98BE45;      /* xanh lá lấy từ logo */
-  --brand-dark: #131B1D; /* đen của logo */
+  --verdict-play: #4ADE80;
+  --brand: #6FE3C1;      /* bạc hà */
+  --brand-dark: #0B1524;
   /* typography (px ở khung rộng 1080) */
   --font: "Be Vietnam Pro", sans-serif;
   --hook-px: 96px;

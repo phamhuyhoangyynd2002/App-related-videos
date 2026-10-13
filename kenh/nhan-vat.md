@@ -15,30 +15,40 @@ Không cần: hoạt hình nhép miệng, nhiều góc quay, nhân vật phụ. 
 
 ## 2. Linh vật là ai
 
-TODO: tên, tính cách (khớp mục 1 của cẩm nang), câu cửa miệng.
+**Lười** (chữ L của "Anh Lười đây!", chốt 12/10/2026): chính là "Anh Lười" trong lời đọc. Lười tới mức thử hết ứng dụng để khỏi làm tay, mắt luôn lim dim, chỉ mở to khi gặp ứng dụng xịn thật. Câu cửa miệng ở `kenh/cam-nang-phong-cach.md` mục 7.
 
 ## 3. Tạo hình gốc
 
-TODO: lấy từ logo của kênh (`templates/_shared/logo.png`, chưa có). Ghi bảng: thân, mắt, miệng, tay, chân, viền sticker, màu (mã hex), những thứ **không** đưa lên nhân vật. Phong cách gợi ý: vector phẳng, khối rõ, viền trắng dày, nhìn ở cỡ 200px vẫn đọc ra.
+Lấy từ logo (`templates/_shared/logo-nguon/logo-goc.png`; prompt ở `logo-nguon/prompt-bieu-cam.md`):
+
+| Phần | Tạo hình |
+|---|---|
+| Thân | Chữ L khối 3D, mặt `#6FE3C1`, cạnh `#3FB89A`, viền xanh đêm `#0B1524` dày |
+| Mắt | Hai mắt tròn kem `#F4F1E6`, mí nặng nửa khép (mặc định) |
+| Miệng | Thanh vuốt home: viên thuốc ngang màu kem, viền tối |
+| Tay | Tay đen mảnh, găng trắng kiểu hoạt hình |
+| Chân | Chân đen ngắn, giày đen bóng (chuẩn; hai bản đầu `lim-dim`, `ngu-gat` đang giày kem) |
+| Đạo cụ | Bệ điện thoại nằm ngửa (có thanh home) ở các tư thế nằm, ngồi |
+| Không đưa lên | Tóc, mũ, quần áo, logo Apple/Google, chữ V, D-pad của Vừa |
 
 ## 4. Bộ biểu cảm
 
 Mỗi hình là PNG nền trong suốt, 1024×1024, nhân vật ở giữa, toàn thân. **Tên file cố định** (template và kịch bản gọi theo tên này), lưu ở `templates/_shared/sticker/`:
 
-| File | Dùng khi | Gợi ý biểu cảm, đạo cụ | Sfx đi kèm |
+| File | Dùng khi | Biểu cảm | Sfx đi kèm |
 |---|---|---|---|
-| `linh-vat-cuoi.png` | Khen, ứng dụng hay, mở đầu tích cực | Cười rộng, hai tay giơ lên, sao nhỏ quanh đầu | `boing` |
-| `linh-vat-soc.png` | Bất ngờ, chi tiết vô lý, "Ủa?" | Mắt mở to, miệng chữ O, hai tay ôm má | `xuoc-dia` |
-| `linh-vat-cay.png` | Quảng cáo dồn dập, bị lừa trả phí | Nghiến răng, khói bốc lên | `bonk` |
-| `linh-vat-khoc.png` | Giá gói cao, mất dữ liệu, hết bộ nhớ | Nước mắt hai dòng, ôm điện thoại báo đầy bộ nhớ | `de-kem` |
-| `linh-vat-ngau.png` | Phán quyết `CÀI NGAY`, hạng S | Kính râm, ngón cái | chữ ký âm thanh (tự thêm cùng con dấu) |
-| `linh-vat-ngu-gat.png` | Ứng dụng nhạt, `BỎ QUA`, chờ tải lâu | Mắt nhắm, chữ "Zzz" | `im-lang` |
-| `linh-vat-do-mo-hoi.png` | Ứng dụng nặng, hao pin, xin nhiều quyền | Mồ hôi, ôm điện thoại nóng, pin đỏ | `buzz-sai` |
-| `linh-vat-nghi.png` | Đặt câu hỏi, cân nhắc hạng, câu hỏi cuối video | Chống cằm, dấu "?" | `pop` |
-| `linh-vat-che.png` | Câu hạng D (cẩm nang mục 5), chê nhẹ | Mắt lờ đờ, khoanh tay | `buzz-sai` |
-| `linh-vat-co-bap.png`, `linh-vat-gay-yeu.png` | Gag `so-sanh` (mạnh / yếu) | Gồng cơ / gầy gò | |
+| `linh-vat-lim-dim.png` | Mặc định, giới thiệu ứng dụng | Ngả lưng trên bệ, vẫy tay lười | `pop` |
+| `linh-vat-ngu-gat.png` | Ứng dụng nhạt, `BỎ QUA`, chờ tải lâu | Mắt nhắm, "z z" | `im-lang` |
+| `linh-vat-tinh-ngu.png` | Ứng dụng xịn bất ngờ, mở đầu, "Ủa?" | Mắt mở to, hai tay giơ, vạch chuyển động | `xuoc-dia` |
+| `linh-vat-duyet.png` | "Anh Lười duyệt", `CÀI NGAY`, hạng S | Ngón cái, cười nhếch | chữ ký âm thanh (cùng con dấu) |
+| `linh-vat-che.png` | Chê nhẹ, hạng D | Liếc ngang, tay đẩy ra | `buzz-sai` |
+| `linh-vat-soc-gia.png` | Gói trả phí đắt, hết bộ nhớ | Ôm má, giọt mồ hôi | `de-kem` |
+| `linh-vat-nghi.png` | Cân nhắc, câu hỏi cuối video | Chống cằm, dấu "?" | `pop` |
+| `linh-vat-cuoi.png` | Gag, khen | Cười ôm bụng | `boing` |
+| `linh-vat-buc.png` | Quảng cáo dày, xin quyền vô lý | Khoanh tay, dấu gân | `bonk` |
+| `linh-vat-luoi-cham.png` | "Ba chạm, hết việc", mẹo nhanh | Nằm, một ngón chạm màn hình | `pop` |
 
-Template `tier-board` tự chọn biểu cảm theo hạng: SSS, S → `ngau`; A → `cuoi`; B → `nghi`; C → `do-mo-hoi`; D → `ngu-gat`.
+Template `tier-board` tự chọn biểu cảm theo hạng: SSS, S → `duyet`; A → `cuoi`; B → `nghi`; C → `buc`; D → `ngu-gat`; cảnh mở đầu → `tinh-ngu`.
 
 ## 5. Cách tạo bằng AI
 

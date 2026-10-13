@@ -43,6 +43,8 @@ Tiêu chí chất lượng:
 - Bản đầy đủ: mỗi mục có một khoảnh khắc hình chính khác mục liền trước, có câu mồi trong lời đọc; ít nhất 4 kiểu hình khác nhau; hạng 1 là cao trào hình của video.
 - Đúng độ lầy trong `brief.md` (mặc định theo hồ sơ kênh). Video mức 3–4 đủ năm chỗ bắt buộc phải lầy; mỗi mục có punchline và `gags`; đoạn khô dài nhất không quá mức cho phép; đạt bảng tự chấm độ lầy của cẩm nang.
 
+Không tự viết phiên âm vào `pronunciation`: tên ứng dụng đọc theo từ điển kênh `kenh/phat-am.json`. Tên nào chưa có trong từ điển thì liệt kê ở phần trả về ("cần chấm phát âm: …") để người điều phối chạy `thu_phat_am.py` (13/10/2026).
+
 Ngoài `narration`, luôn điền `message` (video nói với ai điều gì), `role` cho từng cảnh, 2 phương án trong `hook_variants`, và `shots` có `cue` cho mọi cảnh dài hơn 3 giây. Đọc `kenh/bai-hoc.md` để tránh kiểu hook và cấu trúc đã được chứng minh là kém.
 
 Trả về (tối đa 10 dòng): `message`, số cảnh, độ dài ước tính, hook đang chọn và 2 phương án thay thế, vòng tò mò đã mở, độ lầy + 2 câu đùa bạn thấy mạnh nhất, đường năng lượng hình (vd. "#3 lật thẻ → #2 combo → #1 chia ô + con dấu"), cảnh báo còn lại.

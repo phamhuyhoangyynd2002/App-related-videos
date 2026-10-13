@@ -2,7 +2,7 @@
 
 Dự án tự động hoá việc làm **video ngắn dọc 9:16 giới thiệu, xếp hạng, đánh giá ứng dụng điện thoại** (không phải game) để đăng TikTok, YouTube Shorts và Facebook Reels, Instagram Reels đăng thêm (khung ngang chỉ làm khi được yêu cầu). Tên kênh, lời hứa, giọng văn: chưa chốt, chạy `/thiet-lap-kenh` trước video đầu tiên (`kenh/ho-so-kenh.md` còn dòng TODO). Căn cứ thị trường: [docs/danh-gia-thi-truong-pc-va-ung-dung-2026-10-12.md](docs/danh-gia-thi-truong-pc-va-ung-dung-2026-10-12.md).
 
-Bộ công cụ chuyển ngày 12/10/2026 từ kênh game Game Vừa Ví (`../Gaming-related-videos`, tên nội bộ GameReel). Cách viết, dựng, kiểm tra giữ nguyên; nguồn tài nguyên, quy tắc bản quyền, nghiên cứu, bản tin đã viết lại cho ứng dụng. **Không dùng lại** tên, logo, linh vật Vừa, chữ ký âm thanh, câu ký tên của kênh game. Sửa lỗi ở phần dùng chung (giọng đọc, timeline, render, template) thì nhắc người dùng xem có cần sửa bên repo kia không.
+Bộ công cụ chuyển ngày 12/10/2026 từ kênh game Game Vừa Ví (`../Gaming-related-videos`, tên nội bộ GameReel). Cách viết, dựng, kiểm tra giữ nguyên; nguồn tài nguyên, quy tắc bản quyền, nghiên cứu, bản tin đã viết lại cho ứng dụng. Logo dùng chung **công thức** của chuỗi kênh (chữ cái đầu thành nhân vật có mắt, biểu tượng ngách làm miệng, bệ xếp tầng, hàng 4 biểu tượng nét rỗng; chốt 12/10/2026, prompt ở `templates/_shared/logo-nguon/prompt.md`). **Không dùng lại** tên, nhân vật Vừa, màu, chữ ký âm thanh, câu ký tên của kênh game. Sửa lỗi ở phần dùng chung (giọng đọc, timeline, render, template) thì nhắc người dùng xem có cần sửa bên repo kia không.
 
 Người làm video chỉ **nêu chủ đề + ý chính**, **xác nhận thông tin/kịch bản**, **duyệt hình ảnh/video** (và **tự quay màn hình** khi dùng thử ứng dụng), **xem video cuối**; mọi bước còn lại Claude tự làm. Thiết kế tổng thể ở [README.md](README.md).
 
@@ -12,6 +12,7 @@ Người làm video chỉ **nêu chủ đề + ý chính**, **xác nhận thông
 |---|---|
 | Thiết lập kênh lần đầu (tên, giọng, màu, logo, linh vật, nhãn con dấu) | `/thiet-lap-kenh` |
 | Bản tin ứng dụng thứ Hai / cập nhật thứ Năm | `/ban-tin-tuan` / `/ban-tin-tuan cap-nhat` |
+| Xem kênh ứng dụng lớn nước ngoài đang làm chủ đề, app gì | `/soi-kenh-lon` |
 | Chưa biết làm gì, cần gợi ý chủ đề | `/goi-y-chu-de` |
 | Làm trọn một video từ chủ đề | `/tao-video 4 ứng dụng quét tài liệu miễn phí cho sinh viên` |
 | Làm tiếp một series | `/tao-video series:ung-dung-it-nguoi-biet` |
@@ -95,7 +96,7 @@ Nằm trong [.claude/rules/](.claude/rules/) và được nạp tự động:
 ## Môi trường cần có
 
 - Node.js **22+** (HyperFrames), FFmpeg, Chrome/Chromium. Kiểm tra: `npx hyperframes doctor`.
-- Python 3.9+ và `pip install azure-cognitiveservices-speech pyvi google-play-scraper pillow` (giọng đọc Azure; tách từ tiếng Việt cho phụ đề; số liệu Google Play; bảng ảnh). `edge-tts` chỉ cần nếu muốn làm nháp miễn phí.
+- Python 3.9+ và `pip install azure-cognitiveservices-speech pyvi google-play-scraper pillow` (giọng đọc Azure; tách từ tiếng Việt cho phụ đề; số liệu Google Play; bảng ảnh). `edge-tts` chỉ cần nếu muốn làm nháp miễn phí. `/soi-kenh-lon` cần `yt-dlp` bản mới (Python 3.10+; máy chỉ có 3.9 thì chạy qua `uv`, xem skill).
 - `.env`: `ANTHROPIC_API_KEY`, `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION` (bắt buộc khi kênh kiếm tiền), `YOUTUBE_API_KEY` (tuỳ chọn, cho bản tin).
 - Đã có sẵn (chép từ kênh game, giấy phép cho dùng ở kênh khác): nhạc Kevin MacLeod CC BY 4.0 trong `music/` (phải ghi công), sfx tự tổng hợp trong `sfx/`, font Be Vietnam Pro (OFL), GSAP. **Chưa có**: `templates/_shared/logo.png`, linh vật. `sfx/chu-ky.wav` là bản nháp mới, cần nghe thử.
 

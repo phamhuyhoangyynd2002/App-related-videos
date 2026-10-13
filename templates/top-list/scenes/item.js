@@ -19,6 +19,16 @@
  *   text (lần sau)    → nhịp nhấn: nền quét màu, gạch chân thể loại, số hạng đập nhẹ
  *   shots[].kieu      → kiểu hình (_shared/kieu-hinh.js): dap-zoom, dap-zoom-rung, cat-nhay, chia-o cho nhịp ảnh;
  *                       lat-the, dem-so cho thẻ. Ảnh nằm trong máy quay .kh-cam của khung.
+ *
+ * mp – chống nhàm (13/10/2026, người làm video chê "trong video nhàm chán"; giữ nguyên khung bố cục mp):
+ *   - điện thoại vào cảnh trượt từ phải, nghiêng 8° rồi đứng thẳng (nảy nhẹ);
+ *   - nhịp icon (header = icon ở ứng dụng Google Play) là màn mở app: icon giữa màn, không phóng icon lấp khung;
+ *     ảnh kế tiếp bung ra từ icon như mở ứng dụng;
+ *   - mỗi lần đổi ảnh là một kiểu chuyển có chủ đích (phone.js), xoay vòng vuốt ngang / cuộn lên / đập zoom nửa
+ *     trên–dưới, lệch pha theo thứ tự mục để hai mục liền nhau không mở cùng kiểu; nhịp có kiểu hình thì không đập
+ *     thêm (kiểu hình là nhân vật chính), chia-o thì cắt cứng;
+ *   - ảnh cao hơn khung cuộn chậm từ trên xuống như đang lướt; ảnh khác phóng chậm 7%;
+ *   - nhịp text lần 2: số hạng đập mạnh hơn (1,3×) và khung điện thoại rung nhẹ.
  */
 (function () {
   "use strict";
@@ -54,6 +64,7 @@
     var shots = s.shots || [];
     var hasMedia = sceneHasMedia(s, h);
     var KH = window.AppReel.kieu || null; // kiểu hình (kieu-hinh.js), không nạp thì dựng như cũ
+    var PH = TL.phone || null; // chuyển ảnh của điện thoại dọc (phone.js), không nạp thì mp dựng như cũ
 
     // vị trí của cảnh trong nhóm cùng kiểu (có ảnh / không ảnh) để xoay vòng bố cục
     var same = ctx.items.filter(function (it) {
@@ -183,11 +194,21 @@
         var box = region && zoom ? zoom : frame;
         // ảnh nằm trong máy quay của khung (kieu-hinh.js) để kiểu hình phóng/cắt cả khung
         var holder = KH ? KH.cam(box) : box;
-        var img = el("img", "tl-shot", null, holder);
+        // mp (13/10/2026): mỗi ảnh của khung điện thoại nằm trong một khe riêng (phone.js) để chuyển ảnh tween khe,
+        // zoom/cuộn trong ảnh tween ảnh. Ảnh là icon ứng dụng thì thành màn mở app (icon giữa màn).
+        var slot = null;
+        var splash = false;
+        if (portrait && PH && box === frame) {
+          slot = el("div", "tl-slot", null, holder);
+          slot.setAttribute("data-layout-allow-overflow", "");
+          splash = !!(s.media && s.media.icon && src === s.media.icon);
+          if (splash) slot.classList.add("tl-splash");
+        }
+        var img = el("img", splash ? "tl-splash-icon" : "tl-shot", null, slot || holder);
         img.src = src;
         img.alt = ""; img.setAttribute("data-layout-allow-overflow", "");
-        if (holder === box && facts.parentNode === box) box.insertBefore(img, facts);
-        layers.push({ shot: sh, index: i, node: img, src: src, box: box, region: region, crop: h.cropFor(s.media, src) });
+        if (!slot && holder === box && facts.parentNode === box) box.insertBefore(img, facts);
+        layers.push({ shot: sh, index: i, node: img, slot: slot, splash: splash, src: src, box: box, region: region, crop: h.cropFor(s.media, src) });
       }
     });
 
@@ -295,6 +316,11 @@
           });
           if (!shrunk) break;
         }
+        // mp: điện thoại bắt đầu ngay dưới hàng hạng + tựa (chiều cao hàng đổi theo tựa 1 hay 2 dòng), cột thẻ
+        // bên trái cùng đỉnh với điện thoại
+        if (portrait && frame) {
+          frame.style.top = Math.round(head.offsetTop + head.offsetHeight + 18) + "px";
+        }
         // mp có phán quyết: thẻ và tựa nằm đúng dải 45% của con dấu, nên con dấu đóng lên nửa trên ảnh dọc
         // (cỡ 60%), không che tựa mục, tên ứng dụng, thẻ. Lệch frame.md có chủ ý, ghi ở nhat-ky.md.
         if (portrait && s.verdict && frame) {
@@ -329,6 +355,9 @@
         layers.forEach(function (L) {
           if (L.video) return;
           var W = L.box.clientWidth, H = L.box.clientHeight;
+          L.W = W;
+          L.H = H;
+          if (L.splash) return; // màn mở app: icon đặt bằng CSS giữa khe
           var size = h.imageSize(L.node, s.media, L.src);
           if (!W || !H || !size.w || !size.h) return;
           var mc = L.crop ? { x: L.crop.x, y: L.crop.y, w: L.crop.w, h: L.crop.h } : null;
@@ -393,6 +422,64 @@
         if (rep) tl.fromTo(rep, { x: variant === "v1" || variant === "m1" ? 40 : -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: h.EASE_IN }, rankIn + 0.6);
         tl.fromTo(genre, { scale: 1 }, { scale: GENRE_GROW, duration: dur, ease: h.EASE_FLOW }, start);
 
+        // mp (13/10/2026): điện thoại vào cảnh trượt từ phải, nghiêng 8° rồi đứng thẳng (back.out: lắc qua nhẹ rồi dừng).
+        // Clip quay màn hình nằm ngoài khung (lớp gốc) nên cảnh mở bằng clip thì bỏ, để clip không lệch khung.
+        var phoneSettled = null; // lúc điện thoại đã đứng yên: rung nhịp nhấn chỉ chạy sau mốc này
+        if (portrait && frame && PH && !layers.some(function (L) { return L.video && L.index === 0; })) {
+          tl.fromTo(frame, { x: 150, y: 30 }, { x: 0, y: 0, duration: 0.5, ease: "expo.out" }, start);
+          tl.fromTo(frame, { rotation: 8 }, { rotation: 0, duration: 0.7, ease: "back.out(1.8)" }, start);
+          phoneSettled = start + 0.7;
+        }
+
+        // mp: lịch đổi ảnh trong khung điện thoại (phone.js). Mỗi lớp: kind (kiểu chuyển), land (lúc vào xong),
+        // cut (lúc bắt đầu chuyển; dap, cat là lúc cắt), out (lúc lớp sau đã phủ kín), mode (splash, scroll, push).
+        var mpL = PH && portrait ? layers.filter(function (L) { return !!L.slot; }) : [];
+        var itemPos = Math.max(0, ctx.items.findIndex(function (it) { return it.scene.id === s.id; }));
+        var changes = 0;
+        var daps = 0;
+        mpL.forEach(function (L, i) {
+          var P = i ? mpL[i - 1] : null;
+          var lead = KH ? KH.lead(L.shot) : 0;
+          L.land = L.index === 0 ? start : Math.max(L.t0 + 0.12, L.shot.at - lead);
+          L.mode = L.splash ? "splash" : PH.isTall(L.geo, L.H, L.crop) ? "scroll" : "push";
+          if (L.index === 0) L.kind = null; // có sẵn từ đầu cảnh, điện thoại vào cảnh mang nó theo
+          else if (!P) L.kind = "cuon"; // ảnh đầu tiên tới sau đầu cảnh: trượt lên vào khung trống
+          else if (P.splash && !L.splash) L.kind = "mo-app";
+          else if (L.shot.kieu === "chia-o") { L.kind = "cat"; changes++; }
+          else if (P.src === L.src && !L.shot.kieu && !L.splash) { L.kind = "dap"; changes++; }
+          else {
+            var kind = PH.KINDS[(itemPos + changes) % PH.KINDS.length];
+            // nhịp có kiểu hình (dap-zoom, cat-nhay) đã có cú đập riêng: không đập thêm lúc đổi ảnh
+            if (kind === "dap" && (L.shot.kieu || L.splash)) kind = PH.KINDS[(itemPos + changes + 1) % PH.KINDS.length];
+            L.kind = kind;
+            changes++;
+          }
+          L.cut = L.kind === "dap" ? Math.max(L.t0, L.land - PH.DAP_PRE)
+            : L.kind === "cat" ? Math.max(L.t0, L.shot.at - 0.14) : L.t0;
+          if (L.kind === "dap") L.fy = daps++ % 2 ? 0.36 : 0.66; // xen kẽ nửa dưới / nửa trên màn hình
+        });
+        mpL.forEach(function (L, i) {
+          var N = mpL[i + 1];
+          L.out = N ? Math.min(end, N.kind === "dap" || N.kind === "cat" ? N.cut + 0.04 : N.land) : end;
+        });
+        var pushes = 0;
+        function mpLayer(L) {
+          var i = mpL.indexOf(L);
+          var P = i > 0 ? mpL[i - 1] : null;
+          if (L.kind) PH.change(tl, { kind: L.kind, slot: L.slot, prev: P ? P.slot : null, W: L.W, H: L.H, t0: L.cut, t1: L.land });
+          if (L.mode === "splash") {
+            tl.fromTo(L.node, { scale: 1 }, { scale: 1.08, duration: Math.max(0.3, L.out - L.t0), ease: h.EASE_FLOW }, L.t0);
+          } else if (L.kind === "dap") {
+            PH.punch(tl, { node: L.node, geo: L.geo, W: L.W, H: L.H, cut: L.cut, at: L.land, end: L.out, fy: L.fy, bounds: L.crop });
+          } else {
+            // mở app luôn phóng vào; còn lại xen kẽ phóng vào / lùi ra
+            var zin = L.kind === "mo-app" || pushes % 2 === 0;
+            if (L.mode === "push") pushes++;
+            PH.drift(tl, { node: L.node, geo: L.geo, W: L.W, H: L.H, t0: L.t0, t1: L.out, mode: L.mode,
+              z0: zin ? 1 : 1.07, z1: zin ? 1.07 : 1, bounds: L.crop });
+          }
+        }
+
         // ảnh: crossfade xong đúng `at`, zoom chậm quanh tâm vùng tới khi lớp sau phủ lên (đảo chiều xen kẽ).
         // Hai nhịp liền nhau cùng ảnh: lớp mới khớp đúng chỗ lớp cũ đang hiện rồi lia/zoom PAN giây sang vùng của nó.
         var prevIn = {}; // lớp trước trong cùng khung
@@ -414,6 +501,10 @@
           else { L.z0 = k % 2 ? 1.1 : 1.0; L.z1 = k % 2 ? 1.02 : 1.08; }
           var P = prevIn[key];
           prevIn[key] = L;
+          if (L.slot) {
+            mpLayer(L); // mp: chuyển ảnh có chủ đích (phone.js) thay crossfade
+            return;
+          }
           if (!L.geo) {
             // ảnh chưa đo được kích thước: giữ cách cũ (object-fit: cover, zoom quanh tâm khung)
             tl.fromTo(L.node, { opacity: L.index === 0 ? 0.001 : 0 }, { opacity: 1, duration: L.index === 0 ? 0.2 : 0.3, ease: "power2.out" }, inAt);
@@ -462,8 +553,10 @@
             if (L.video || !L.shot.kieu) return;
             var nx = null;
             for (var q = j + 1; q < layers.length; q++) if (!layers[q].video && layers[q].box === L.box) { nx = layers[q]; break; }
+            // mp: ảnh sau vào bằng cắt (dap, cat) thì máy quay về 1× đúng lúc cắt
+            var until = nx ? (nx.slot && (nx.kind === "dap" || nx.kind === "cat") ? nx.cut : nx.t0) : null;
             KH.shot(tl, { box: L.box, shot: L.shot, media: s.media, src: L.src, region: L.region,
-              until: nx ? nx.t0 : null, floor: start });
+              until: until, floor: start });
           });
         }
 
@@ -508,7 +601,17 @@
           } else {
             tl.fromTo(wipe, { opacity: 1 }, { opacity: 0.35, duration: 0.35, ease: h.EASE_IN, immediateRender: false }, t);
           }
-          tl.fromTo(rankPunch, { scale: 1.16 }, { scale: 1, duration: 0.4, ease: h.EASE_IN, immediateRender: false }, sh.at - 0.05);
+          // mp (13/10/2026): số hạng đập mạnh hơn (1,3×) vì nhịp text là nhịp nhấn duy nhất không đổi ảnh
+          tl.fromTo(rankPunch, { scale: portrait && PH ? 1.3 : 1.16 }, { scale: 1, duration: 0.4, ease: h.EASE_IN, immediateRender: false }, sh.at - 0.05);
+          // mp: khung điện thoại rung nhẹ (12px, tắt dần trong 0,2s); không chạy khi điện thoại còn đang vào cảnh hoặc
+          // clip quay màn hình đang hiện (clip nằm ngoài khung, không rung theo)
+          var clipOn = layers.some(function (L) { return L.video && L.t0 <= sh.at && L.shot.end > sh.at; });
+          if (portrait && frame && PH && !clipOn && (phoneSettled === null || sh.at - 0.02 >= phoneSettled)) {
+            var offs = [0, 12, -9, 6, -3, 0];
+            for (var q = 1; q < offs.length; q++) {
+              tl.fromTo(frame, { x: offs[q - 1] }, { x: offs[q], duration: 0.04, ease: "power1.inOut", immediateRender: false }, sh.at - 0.02 + (q - 1) * 0.04);
+            }
+          }
         });
       },
     };

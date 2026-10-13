@@ -10,7 +10,7 @@ Làm theo đúng skill `nghien-cuu` tại `.claude/skills/nghien-cuu/SKILL.md` (
 
 Yêu cầu bắt buộc:
 - Chỉ ghi thông tin có nguồn. Mỗi số liệu có cột nguồn và ngày của nguồn (trang cửa hàng: ngày tra).
-- Chọn ứng dụng phù hợp **góc nhìn riêng** trong `brief.md`, không chỉ chọn ứng dụng nổi tiếng nhất. Với dạng "ít người biết", ghi hạng hiện tại trên App Store VN nếu có (bản tin tuần ở `ke-hoach/ban-tin/` hoặc tra lại).
+- Chọn ứng dụng phù hợp **góc nhìn riêng** trong `brief.md`, không chỉ chọn ứng dụng nổi tiếng nhất. Với dạng "ít người biết": áp **phép thử ngách** ở `kenh/series.md` (Google, Zalo, ChatGPT hay ứng dụng có sẵn trên máy có làm thay được không; có thì loại) và ghi câu trả lời cho từng ứng dụng trong `research.md`. Với dạng "ít người biết", ghi hạng hiện tại trên App Store VN nếu có (bản tin tuần ở `ke-hoach/ban-tin/` hoặc tra lại).
 - Ghi `app_store_id` (URL `apps.apple.com/vn/app/.../id<số>`) và `play_package` (giá trị `id=` trên link Google Play) **chỉ khi thấy trên URL**. Luôn ghi tên nhà phát triển đúng như trên cửa hàng: ứng dụng giả mạo, "ăn theo" tên lớn rất nhiều.
 - Với mỗi ứng dụng ghi: giá và các gói trả phí (App Store VN), bản miễn phí làm được gì, có quảng cáo không, có tiếng Việt không, nền tảng (iOS, Android, web), dung lượng, điểm và số lượt đánh giá, lượt tải (Google Play), ngày cập nhật gần nhất, quyền truy cập đáng chú ý (trang "Quyền riêng tư của ứng dụng" trên App Store, "An toàn dữ liệu" trên Google Play).
 - **Tính năng**: chỉ ghi tính năng có trên trang chính thức hoặc ghi chú phát hành; ghi rõ tính năng nào chỉ có ở bản trả phí, chỉ có ở một hệ điều hành, chỉ có ở một số nước. Đề xuất 2–4 thao tác nên tự quay khi dùng thử (để bước tài nguyên ghi `goi-y-tu-quay.md`).

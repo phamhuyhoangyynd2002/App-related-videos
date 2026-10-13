@@ -48,7 +48,7 @@ Mở rộng từ schema trong README. Các trường gốc của README giữ ng
 | `hinh_chinh` | string | nên có (bản đầy đủ: mỗi cảnh `item`/`tier`) | Khoảnh khắc hình chính của mục, lên kế hoạch **trước khi viết lời** (`references/ke-hoach-hinh.md`): kiểu gì, rơi vào chữ nào, vì sao. Vd. `"đập zoom vào nút Xoá phông đúng chữ 'một chạm' (cao trào nhịp 3)"`. Phải ứng với một `kieu` trong `shots` hoặc gag `combo` / `keo-so-sanh`. Hiện ở cột "Khoảnh khắc hình" của bảng DỪNG 2 |
 | `chuyen` | `"day-len"` \| `"lia"` | không | Cách vào cảnh này từ cảnh trước (top-list): `day-len` cảnh mới đẩy cảnh cũ lên như vuốt feed, `lia` lia ngang có nhoè. Tier-board bỏ qua. Xem `templates/_shared/kieu-hinh.md` |
 | `media` | `{ "prefer": "clip"\|"screenshot"\|"header", "clip_start": số giây }` | không | |
-| `pronunciation` | string | không | Cách đọc tên ứng dụng nếu TTS đọc sai, ví dụ `"nâu sần"` cho Notion. Nhiều tên trong một cảnh: `"Tên A: phiên âm; Tên B: phiên âm"`, tên phải viết **đúng như trong `narration`** (ví dụ "CapCut", không phải "Cap Cut"). Sau khi tạo giọng, nghe lại hoặc nhận dạng lời để chắc TTS không đọc lẫn chuỗi phiên âm |
+| `pronunciation` | string | không | Chỉ để **ghi đè** từ điển phát âm của kênh `kenh/phat-am.json` cho riêng video này. Mặc định để trống: tên ứng dụng tự đọc theo từ điển; tên chưa có trong từ điển thì chấm bằng `thu_phat_am.py` (skill `long-tieng`), không tự nghĩ phiên âm (13/10/2026). Dạng ghi đè: `"nâu sần"`, nhiều tên `"Tên A: phiên âm; Tên B: phiên âm"` |
 
 ## Shot: nhịp hình khớp theo lời đọc
 
@@ -76,7 +76,7 @@ Mỗi gag là một khoảnh khắc 0,8–3 giây đè lên hình đang chạy, 
 |---|---|
 | `cue` | Từ trong `narration`, thường là chữ đầu của câu punchline |
 | `kind` | `sticker` (hình linh vật hoặc đạo cụ), `dong-bang` (đứng hình ngả xám + chữ), `zoom-kich-tinh` (zoom giật vào chi tiết, khoanh đỏ), `rung` (rung khung), `ky-vong-thuc-te`, `ten-that`, `tin-nhan`, `the-thoi-gian`, `ba-giai-doan`, `so-sanh` (cặp mạnh / yếu), `chu-to` (chữ "???", "HẾT." phủ tối toàn khung; cùng `dong-bang` tối đa 2 lần mỗi video, chỉ câu cụt 1–3 chữ, không nhắc lại lời đọc), `dau-chu` (chữ đóng dấu nghiêng đè lên ảnh, không phủ tối, tối đa 4 chữ; dùng thay `chu-to` cho mọi chữ nhấn khác), `binh-luan` (bình luận tập trước, đã che tên và ảnh đại diện), `combo` (bộ đếm đòn "QUẢNG CÁO x3 COMBO!", tối đa 1 lần mỗi video), `keo-so-sanh` (thanh kéo chia đôi hai ảnh của cùng ứng dụng, tối đa 1 lần mỗi video) |
-| `asset` | Với `sticker`, `so-sanh`: tên file trong `templates/_shared/sticker/` không có đuôi, ví dụ `linh-vat-khoc` |
+| `asset` | Với `sticker`, `so-sanh`: tên file trong `templates/_shared/sticker/` không có đuôi, ví dụ `linh-vat-soc-gia` |
 | `strong` | Tuỳ chọn, chỉ `so-sanh`: dòng mạnh (0 hoặc 1) để tô nền brand và đặt linh vật. Bỏ trống thì template tự nhận dòng yếu qua từ KHÔNG, CHƯA, THỬ… |
 | `text` | Chữ của gag (≤ 20 ký tự mỗi dòng), ví dụ `"5 PHÚT SAU…"`, `["KỲ VỌNG", "THỰC TẾ"]`, tin nhắn `[["Pin", "Đừng."], ["Mình", "Một ứng dụng nữa thôi."]]` |
 | `so` | Chỉ `combo`: số đòn, số nguyên 2–9 (mặc định 3). `text` là nhãn ("QUẢNG CÁO") |
@@ -140,7 +140,7 @@ Trạng thái 06/10/2026: `templates/_shared/gags.js` đã dựng mọi loại t
         { "cue": "chụp một phát", "show": "clip", "from": 10 },
         { "cue": "quảng cáo", "show": "fact:Quảng cáo" }
       ],
-      "gags": [{ "cue": "quảng cáo", "kind": "sticker", "asset": "linh-vat-cay", "sfx": "bonk" }],
+      "gags": [{ "cue": "quảng cáo", "kind": "sticker", "asset": "linh-vat-buc", "sfx": "bonk" }],
       "sfx": [{ "name": "whoosh", "cue": "Số bốn" }]
     },
     {

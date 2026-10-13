@@ -50,7 +50,8 @@ Người dùng gõ `cap-nhat` mà tuần ISO đó chưa có bản đầy đủ: 
    python3 .claude/skills/ban-tin-tuan/scripts/bang_xep_hang.py --che-do day-du   # hoặc cap-nhat
    ```
    Script lấy 3 bảng App Store VN (miễn phí, có phí, doanh thu; 200 dòng mỗi bảng, đã bỏ game), tra thông tin từng ứng dụng, Google Trends VN, rồi ghi `du-lieu/bang-xep-hang.md`: biến động MỚI, ▲▼ so với lần chạy trước, thể loại, **ứng dụng AI trong top** (lọc theo tên), **ứng dụng phát hành trong 90 ngày đã lọt bảng**, tìm kiếm thịnh hành liên quan ứng dụng. Lỗi mạng thì ghi vào "Nguồn lỗi" và làm tiếp. Không xoá thư mục lần chạy cũ.
-3. Đọc `ban-tin.md` của lần chạy trước và `ke-hoach/ban-tin/theo-doi.md` (chưa có thì tạo theo mẫu ở cuối file).
+3. Có `ke-hoach/soi-kenh/<ngày>/bao-cao.md` trong 7 ngày (skill `soi-kenh-lon`) thì đọc làm tín hiệu thêm cho chấm điểm (ứng dụng được nhiều kênh nước ngoài nhắc); không chạy lại script soi kênh.
+4. Đọc `ban-tin.md` của lần chạy trước và `ke-hoach/ban-tin/theo-doi.md` (chưa có thì tạo theo mẫu ở cuối file).
 
 ## Bước 2: Giao agent quét nguồn
 

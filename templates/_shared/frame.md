@@ -1,6 +1,6 @@
 ---
 version: draft
-name: Kênh ứng dụng — Frame (bản kế thừa từ Game linh vật Ví, 12/10/2026)
+name: Anh Lười đây! — Frame (12/10/2026)
 description: >
   Hệ thiết kế khung hình của kênh ứng dụng điện thoại cho video ngắn dọc 1080×1920 đăng TikTok,
   YouTube Shorts, Facebook Reels (Instagram Reels đăng thêm). Chép từ hệ thiết kế của kênh game Game linh vật Ví:
@@ -8,21 +8,21 @@ description: >
   /thiet-lap-kenh để hai kênh không trông giống hệt nhau.
   Định dạng theo frame.md của HyperFrames: frontmatter là giá trị bắt buộc, phần chữ bên dưới là ý đồ.
   Thành phần nhận diện (logo-bug, verdict-stamp, sonic-signature, score-card) kế thừa từ kênh game;
-  bảng màu dưới đây là màu của kênh game, chỉ dùng tạm.
+  bảng màu đã đổi sang màu riêng của kênh ngày 12/10/2026.
 unit: khung 1080×1920 (chính); 1920×1080 (phụ)
 principle: một điểm nhấn mỗi cảnh · chữ đọc được trên điện thoại · số liệu lấy từ kịch bản
 
 colors:
-  ground: "#1A1633"     # nền chính
-  ground-2: "#2A2350"   # mảng nền phụ, thẻ thông tin
+  ground: "#132238"     # xanh đêm (giờ đi ngủ của Anh Lười): nền chính
+  ground-2: "#1F3653"   # mảng nền phụ, thẻ thông tin
   text: "#FFFFFF"
-  text-dim: "#C9C3E6"
-  accent: "#FFC23D"     # thứ hạng, từ đang đọc trong phụ đề
-  accent-2: "#FF5C7A"   # điểm nhấn thứ hai, dùng rất ít; con dấu BỎ QUA
+  text-dim: "#B8C7DA"
+  accent: "#FFD84D"     # vàng đèn ngủ: thứ hạng, từ đang đọc trong phụ đề; DÙNG THỬ, CHỜ GIẢM GIÁ
+  accent-2: "#FF7A59"   # cam san hô, dùng rất ít; con dấu BỎ QUA
   outline: "#000000"    # viền chữ phụ đề
-  verdict-play: "#34D27B" # chỉ dùng cho con dấu CHƠI NGAY
-  brand: "#98BE45"      # xanh lá của logo: tên kênh, viền bóng thẻ
-  brand-dark: "#131B1D" # đen của logo: nền màn kết, viền chữ tên kênh
+  verdict-play: "#4ADE80" # chỉ dùng cho con dấu CÀI NGAY (không dùng xanh Android #3DDC84)
+  brand: "#6FE3C1"      # bạc hà: tên kênh, viền bóng thẻ
+  brand-dark: "#0B1524" # nền màn kết, viền chữ tên kênh
 
 typography:
   # Font phải có đủ dấu tiếng Việt và nằm trong templates/_shared/fonts/ (HyperFrames lint bắt buộc @font-face tới file cục bộ)
@@ -64,13 +64,13 @@ components:
   tier-board:
     description: "Bảng SSS→D (nhãn hạng chữ trắng viền đen trên ô màu đỏ, cam, vàng, xanh vàng, xanh lá, xanh dương). Kể từng ứng dụng: bảng thu về góc phải trên (0,36 lần, gốc biến đổi (930, 290): đủ cả hàng D, đáy y ≈ 607, trên dải hình), tên ứng dụng ở góc trái trên trên nền accent, hình ứng dụng dải rộng 1080×560 (y 630–1190), linh vật nhỏ ở góc phải dưới dải hình. Thẻ thông tin (nhãn 44px, giá trị 56px) dùng chung MỘT ô dưới phụ đề (x 60, y 1312–1456, rộng ≤ 870): thẻ mới bật vào thì thẻ cũ trượt ra (cách ≥ 0,3s). Trước câu chốt 0,95s bảng trở về giữa, icon game bay vào hàng. Sticker gag sau lúc đó và ở cảnh kết dùng chỗ dành sẵn góc phải dưới phụ đề (x 750–930, y 1298–1470), không che hàng bảng. Cảnh kết: bảng đầy đủ để soi; đúng lúc đọc câu hỏi (hai từ đầu của chữ trên màn hình) bảng thu 0,72 lần lên trên và băng câu hỏi bật ra ngay dưới bảng (y 940–1188), không che hàng nào. Hook: nhịp nào lời đọc nhắc một hạng ('hạng S', 'C với D', 'ba S') thì ảnh nền là game của hạng đó."
   verdict-stamp:
-    description: "Con dấu phán quyết, đúng một lần mỗi video, vào xong đúng timeline.scenes[].verdict.at. Chữ in hoa theo typography.stamp, viền đôi, xoay −8°, đặt giữa khung ở khoảng 45% chiều cao (trên vùng phụ đề). Vào bằng scale 1.6→1 trong 0.18s kèm rung nhẹ, giữ ít nhất 1.2s. Màu: CHƠI NGAY = verdict-play; CHỜ GIẢM GIÁ, CHƠI THỬ = accent; BỎ QUA = accent-2. Hình dạng và vị trí giống nhau ở mọi kênh. Ngoại lệ tier-board (06/10/2026): bảng chiếm giữa khung, nên lúc icon vào hàng xong bảng thu 0,5 lần lên trên (đáy y ≈ 750) và con dấu đóng ở tâm y 900 (~47%) cỡ 80%: không đè bảng, không đè phụ đề (y ~1198–1298), không vào 450px đáy. Ngoại lệ (người làm video duyệt 05/10/2026): ở bố cục item có ảnh dọc (khung điện thoại), cột tựa mục và thẻ nằm đúng dải 45% nên con dấu đóng lên nửa trên ảnh dọc (tâm khoảng y 480) ở cỡ 60%, để không che tựa mục và thẻ; hình dạng, màu, chuyển động, âm thanh giữ nguyên."
+    description: "Con dấu phán quyết, đúng một lần mỗi video, vào xong đúng timeline.scenes[].verdict.at. Chữ in hoa theo typography.stamp, viền đôi, xoay −8°, đặt giữa khung ở khoảng 45% chiều cao (trên vùng phụ đề). Vào bằng scale 1.6→1 trong 0.18s kèm rung nhẹ, giữ ít nhất 1.2s. Màu: CÀI NGAY = verdict-play; CHỜ GIẢM GIÁ, DÙNG THỬ = accent; BỎ QUA = accent-2. Hình dạng và vị trí giống nhau ở mọi kênh. Ngoại lệ tier-board (06/10/2026): bảng chiếm giữa khung, nên lúc icon vào hàng xong bảng thu 0,5 lần lên trên (đáy y ≈ 750) và con dấu đóng ở tâm y 900 (~47%) cỡ 80%: không đè bảng, không đè phụ đề (y ~1198–1298), không vào 450px đáy. Ngoại lệ (người làm video duyệt 05/10/2026): ở bố cục item có ảnh dọc (khung điện thoại), cột tựa mục và thẻ nằm đúng dải 45% nên con dấu đóng lên nửa trên ảnh dọc (tâm khoảng y 480) ở cỡ 60%, để không che tựa mục và thẻ; hình dạng, màu, chuyển động, âm thanh giữ nguyên."
   gag-so-sanh:
     description: "Gag so-sanh (gags.js): hai dòng đối lập xếp chồng (x 60–930, y ~700–1110, trên phụ đề), mỗi dòng 'NHÃN: GIÁ TRỊ' (nhãn 0,6em). Dòng mạnh nền brand, dòng yếu nền accent-2 đập vào nghiêng nhẹ; dòng yếu tự nhận ra qua từ KHÔNG/CHƯA/THỬ…, ghi đè bằng trường strong (0/1). Dòng 1 xong đúng at, dòng 2 xong đúng lúc đọc từ đầu của nó. linh vật (asset) đứng mép phải dòng mạnh, là hình linh vật duy nhất của khung. Ngoại lệ tier-board màn kết (06/10/2026): bảng đầy đủ chiếm y 430–1170 nên lúc gag vào bảng thu 0,45 lần lên trên (đáy y ≈ 706, đủ S→D), hai dòng đặt từ y 760 (data-vs-top trên nút cảnh), bảng giữ cỡ đó tới câu hỏi rồi về 0,72 lần."
   gag-ba-giai-doan:
     description: "Gag ba-giai-doan: ba nấc chữ bậc thang (lệch phải 90px, xuống 170px; 72 → 88 → 104px; trắng → accent → accent-2), mỗi nấc có ô số 1–3, nấc cũ mờ 60%. Nấc sau xong đúng lúc đọc từ cuối của nó nếu có trong lời, không thì chia đều, cách ≥ 0,3s. Không vẽ ba biểu cảm linh vật (luật một hình linh vật mỗi khung); asset tuỳ chọn hiện một linh vật ở nấc cuối."
   gag-dau-chu:
-    description: "Gag dau-chu (gags.js, 12/10/2026): chữ đóng dấu nghiêng −7°, weight 900 in hoa màu #111 trên nền vàng #FFC23D hoặc xanh #98BE45 (luân phiên, ghi đè bằng color), viền đen 10px, bóng đổ cứng 10/12px. Đè lên góc/mép khung hình ứng dụng của cảnh (data-gag-media), ưu tiên vắt qua mép trên/dưới, không đè tựa, thẻ, phụ đề, logo-bug, trong vùng an toàn; không phủ tối khung; dấu ≤ 28% diện tích khung hình. Tối đa 4 chữ, co chữ theo khung (tối thiểu 52px). Đập vào scale 1.4→1 trong 0,15s, xong đúng at, giữ tới end (build_timeline đặt 1,4s)."
+    description: "Gag dau-chu (gags.js, 12/10/2026): chữ đóng dấu nghiêng −7°, weight 900 in hoa màu #111 trên nền vàng #FFD84D hoặc xanh #6FE3C1 (luân phiên, ghi đè bằng color), viền đen 10px, bóng đổ cứng 10/12px. Đè lên góc/mép khung hình ứng dụng của cảnh (data-gag-media), ưu tiên vắt qua mép trên/dưới, không đè tựa, thẻ, phụ đề, logo-bug, trong vùng an toàn; không phủ tối khung; dấu ≤ 28% diện tích khung hình. Tối đa 4 chữ, co chữ theo khung (tối thiểu 52px). Đập vào scale 1.4→1 trong 0,15s, xong đúng at, giữ tới end (build_timeline đặt 1,4s)."
   gag-lop-toi:
     description: "Không gag nào phủ đen toàn khung (12/10/2026): chu-to và ky-vong-thuc-te chỉ tối cục bộ (elip mép mờ ~45% quanh khối chữ), dong-bang khử màu + xám 22%, viền tối mỏng. Ngoại lệ: the-thoi-gian là thẻ chuyển cảnh toàn khung."
   kieu-hinh:
@@ -103,3 +103,10 @@ Video ngắn được xem trên điện thoại, trong vài giây, thường t�
 ## Kiểm tra trước khi dùng một font khác
 
 Font lỗi tải sẽ âm thầm rơi về font mặc định. Template phải gọi `document.fonts.check('900 96px "Be Vietnam Pro"')` và báo lỗi nếu false. Font trang trí (ví dụ "Press Start 2P" trong theme arcade của HyperFrames) thường **không có dấu tiếng Việt**: chỉ dùng cho số và chữ Latin không dấu.
+
+
+## Ý đồ màu (12/10/2026)
+
+Kênh tên "Anh Lười đây!": cảm giác buổi tối nằm dài lướt điện thoại. Nền xanh đêm thay cho tím than của kênh game; tên kênh màu bạc hà (mát, thư thả) thay xanh lá chuối; accent vàng đèn ngủ giữ vai trò phụ đề, thứ hạng vì đọc tốt nhất trên ảnh ứng dụng. Táo bạo dồn vào số thứ hạng và con dấu; phần còn lại tiết chế.
+
+Tự phản biện: kế hoạch đầu là "nền đen + một màu neon xanh ngọc", rơi đúng lối mặc định của thiết kế AI. Đã đổi: nền xanh đêm có sắc độ, hai màu có vai trò tách bạch (bạc hà = nhận diện, vàng = thông tin đang đọc), cam san hô chỉ cho điểm trừ. Tránh xanh Android và xanh App Store để không giống thương hiệu Google, Apple.

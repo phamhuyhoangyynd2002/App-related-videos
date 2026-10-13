@@ -346,8 +346,8 @@
   /* logo-bug: logo + tên kênh, đứng yên suốt video (có từ khung 0), nảy nhẹ một lần ở 0,3s.
      Tên kênh, lời hứa và logo điền bằng /thiet-lap-kenh (kenh/ho-so-kenh.md); chưa có logo thì ảnh tự ẩn. */
   var LOGO_DEFAULT = "_shared/logo.png";
-  var BRAND_NAME = "TÊN KÊNH";
-  var BRAND_TAG = "Lời hứa của kênh";
+  var BRAND_NAME = "Anh Lười đây!";
+  var BRAND_TAG = "Thử hết, bạn chỉ việc cài";
 
   function hideIfMissing(img) {
     img.onerror = function () { img.style.display = "none"; };
@@ -482,7 +482,7 @@
         (c.words || []).forEach(function (w, j) {
           if (keywords[normWord(w.text)]) return; // từ khoá giữ màu accent suốt cụm
           var next = c.words[j + 1];
-          tl.set(g.spans[j], { color: "#FFC23D" }, w.start);
+          tl.set(g.spans[j], { color: "#FFD84D" }, w.start);
           tl.set(g.spans[j], { color: "#FFFFFF" }, next ? next.start : Math.min(w.end, c.end));
         });
       });

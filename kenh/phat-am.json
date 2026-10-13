@@ -1,0 +1,49 @@
+{
+ "Settle Up": {
+  "phien_am": "sét-tồ ắp",
+  "diem": 0.82,
+  "giong": "vi-VN-NamMinhNeural +50%",
+  "ngay": "2026-10-13",
+  "ung_vien": {
+   "sét-tồ ắp": 0.82,
+   "xét tồ ắp": 0.8,
+   "Settle Up": 0.77,
+   "sét tồ ắp": 0.67
+  }
+ },
+ "PackPoint": {
+  "phien_am": "pắc-poi-n",
+  "diem": 0.8,
+  "giong": "vi-VN-NamMinhNeural +50%",
+  "ngay": "2026-10-13",
+  "ung_vien": {
+   "pắc-poi-n": 0.8,
+   "PackPoint": 0.6,
+   "pắc poi-n": 0.58,
+   "pắc poin": 0.47
+  }
+ },
+ "Polarsteps": {
+  "phien_am": "pô-lờ-x-tép",
+  "diem": 0.95,
+  "giong": "vi-VN-NamMinhNeural +50%",
+  "ngay": "2026-10-13",
+  "ung_vien": {
+   "pô-lờ-x-tép": 0.95,
+   "pâu-lơ-stépx": 0.95,
+   "pô la xtép": 0.89,
+   "Polarsteps": 0.67
+  }
+ },
+ "Wanderlog": {
+  "phien_am": "oan-đờ-lóg",
+  "diem": 0.74,
+  "giong": "vi-VN-NamMinhNeural +50%",
+  "ngay": "2026-10-13",
+  "ung_vien": {
+   "oan-đờ-lóg": 0.74,
+   "Wanderlog": 0.58,
+   "oan đơ lóc": 0.48
+  }
+ }
+}

@@ -20,7 +20,7 @@
   - Điểm số: "9/10" → "chín trên mười".
   - Viết tắt phải đọc được: "AI" → "ây ai", "iOS" → "ai ô ét", "VPN" → "vi pi en", "OCR" → "nhận diện chữ trong ảnh" (lần đầu). Phụ đề tự đổi lại thành ký hiệu (`CAPTION_DISPLAY` trong `build_timeline.py`).
   - Dung lượng: "1,2 GB" → "một phẩy hai gi ga"; giá gói: "99.000đ/tháng" → "chín mươi chín nghìn một tháng".
-- Tên ứng dụng giữ nguyên như trên cửa hàng. Nếu tên khó đọc với giọng Việt, thêm phiên âm trong trường `pronunciation` của cảnh (không đưa vào `narration`).
+- Tên ứng dụng giữ nguyên như trên cửa hàng trong `narration`. Cách đọc lấy từ từ điển kênh `kenh/phat-am.json` (chấm khách quan bằng `thu_phat_am.py`, skill `long-tieng`); tên mới thì chấm trước bước giọng đọc. Không tự nghĩ phiên âm; `pronunciation` của cảnh chỉ để ghi đè từ điển (13/10/2026, phiên âm tự nghĩ bị chê đọc không chuẩn).
 - Không dùng ký tự đặc biệt trong lời đọc: `#`, `&`, `/`, `→`, emoji, ngoặc kép kiểu “ ”.
 - Cảnh cuối: đóng vòng tò mò, nêu quan điểm của kênh, câu hỏi hoặc câu khích kéo bình luận (có thể trêu nhẹ: "Ai thấy xếp sai thì vào cãi, mình đọc hết."), rồi câu ký tên cố định trong hồ sơ kênh. Không nhắc tên nền tảng, không nói "đăng ký kênh", "bấm chuông", "follow".
 

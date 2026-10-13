@@ -33,6 +33,7 @@ DEFAULT_TARGET = {"top-list": (120, 180), "tier-list": (120, 180), "tier-board":
 HORIZONTAL_TARGET = (180, 480)
 AUDIO_EXT = {".mp3", ".wav", ".m4a", ".ogg", ".flac"}
 MAX_SHOT_SECONDS = 3.5   # người xem video ngắn cần hình đổi mỗi 2–3 giây
+MIN_SHOT_SECONDS = 0.8  # nhịp ngắn hơn mức này người xem chưa kịp thấy hình (13/10/2026)
 AUTO_SHOT_SECONDS = 2.5
 STAMP_HOLD = 1.2         # con dấu phán quyết cần đứng ít nhất ngần này giây trước khi hết cảnh
 # Nhóm phụ đề: video dọc ngắn, đổi cụm nhanh; video ngang cho phép cụm dài hơn
@@ -54,6 +55,31 @@ def probe(path: Path) -> float:
                           "-of", "csv=p=0", str(path)], capture_output=True, text=True, check=True)
     return float(out.stdout.strip())
 
+
+
+def image_size(path: Path) -> tuple[int, int] | None:
+    out = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height",
+                          "-of", "csv=p=0:s=x", str(path)], capture_output=True, text=True).stdout.strip()
+    try:
+        w, h = (int(x) for x in out.split("x")[:2])
+        return w, h
+    except ValueError:
+        return None
+
+
+def with_orientation(media: dict | None, project: Path) -> dict | None:
+    """Ghi media.orientation theo kích thước screenshot khi manifest chưa có.
+
+    Template top-list chỉ bật bố cục khung điện thoại (mp) khi orientation = portrait. Bộ công cụ chuyển từ kênh game
+    (screenshot ngang) nên chưa ai ghi trường này, ảnh dọc của ứng dụng bị cắt thành dải ngang ~870×470 (13/10/2026)."""
+    if not media or media.get("orientation") or not media.get("screenshots"):
+        return media
+    sizes = [image_size(project / p) for p in media["screenshots"]]
+    sizes = [x for x in sizes if x]
+    if not sizes:
+        return media
+    tall = sum(1 for w, h in sizes if h > w * 1.2)
+    return dict(media, orientation="portrait" if tall * 2 > len(sizes) else "landscape")
 
 def norm(text: str) -> str:
     """Bỏ dấu câu, chữ thường; giữ dấu tiếng Việt để khớp đúng từ."""
@@ -178,6 +204,10 @@ def build_shots(sc: dict, words: list[dict], media: dict | None, start: float, e
         if shot["end"] - shot["at"] > MAX_SHOT_SECONDS:
             warnings.append(f"cảnh {sc['id']}: nhịp '{shot['show']}' đứng yên {shot['end'] - shot['at']:.1f}s, "
                             f"nên đổi hình trong vòng {MAX_SHOT_SECONDS:g}s")
+        elif shot["end"] - shot["at"] < MIN_SHOT_SECONDS and i + 1 < len(shots):
+            # 13/10/2026: giọng nhanh hơn làm nhịp dồn còn 0,3–0,8s, người xem chưa kịp thấy hình đã đổi
+            warnings.append(f"cảnh {sc['id']}: nhịp '{shot['show']}' chỉ {shot['end'] - shot['at']:.2f}s, "
+                            f"dưới {MIN_SHOT_SECONDS:g}s: bỏ nhịp này hoặc dời cue")
     for i, shot in enumerate(shots):
         kieu = shot.get("kieu")
         if not kieu:
@@ -466,7 +496,7 @@ def main() -> int:
         media = None
         key = (manifest.get("scenes") or {}).get(str(sc["id"]))
         if key:
-            media = manifest["apps"].get(key)
+            media = with_orientation(manifest["apps"].get(key), project)
         elif sc.get("app"):
             warnings.append(f"cảnh {sc['id']}: chưa có tài nguyên cho '{sc['app'].get('name')}'")
         words = [{"text": w["text"], "start": round(voice_start + w["start"], 3),

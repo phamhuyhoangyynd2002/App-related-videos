@@ -233,7 +233,7 @@
     });
     var b = banner(ctx, h.stripRank(ctx.sc.on_screen_text || ""));
     b.wrap.classList.add("tb-banner-intro");
-    var v = linhVat(ctx, ctx.typeIndex === 0 ? "linh-vat-soc" : "linh-vat-nghi", "tb-linhvat-intro");
+    var v = linhVat(ctx, ctx.typeIndex === 0 ? "linh-vat-tinh-ngu" : "linh-vat-nghi", "tb-linhvat-intro");
     var first = s.start < 0.01;
     return withBoard(ctx, {
       fit: function () {
@@ -280,7 +280,7 @@
     var big = hasMedia ? null : banner(ctx, appName);
     if (big) big.wrap.classList.add("tb-banner-item");
     if (!hasMedia) ctx.el.classList.add("tb-nomedia");
-    var LINHVAT_BY_TIER = { SSS: "linh-vat-ngau", S: "linh-vat-ngau", A: "linh-vat-cuoi", B: "linh-vat-nghi", C: "linh-vat-do-mo-hoi", D: "linh-vat-ngu-gat" };
+    var LINHVAT_BY_TIER = { SSS: "linh-vat-duyet", S: "linh-vat-duyet", A: "linh-vat-cuoi", B: "linh-vat-nghi", C: "linh-vat-buc", D: "linh-vat-ngu-gat" };
     var buddy = linhVat(ctx, LINHVAT_BY_TIER[TB.tierOf(sc)] || "linh-vat-nghi", "tb-linhvat-strip");
     // chỗ dành sẵn cho sticker gag sau khi dải rút đi (bảng về giữa khung): góc phải dưới phụ đề, không che bảng
     var slot = el("div", "tb-gag-slot", null, ctx.el);

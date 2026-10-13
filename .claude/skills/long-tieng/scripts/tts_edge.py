@@ -2,7 +2,7 @@
 """Tạo giọng đọc tiếng Việt cho từng cảnh, kèm mốc thời gian từng từ.
 
 Cách dùng:
-  python3 tts_edge.py <thư mục dự án> [--provider azure|edge] [--voice vi-VN-HoaiMyNeural] [--rate +10%] [--only 2,5]
+  python3 tts_edge.py <thư mục dự án> [--provider azure|edge] [--voice vi-VN-NamMinhNeural] [--rate +40%] [--only 2,5]
 
 Dịch vụ:
 - azure (mặc định khi có AZURE_SPEECH_KEY và AZURE_SPEECH_REGION): Azure AI Speech, dịch vụ chính thức,
@@ -11,7 +11,8 @@ Dịch vụ:
   gói Azure có thể vi phạm điều khoản, nên chỉ dùng để làm nháp. Cần: pip install edge-tts
 Dịch vụ đã dùng được ghi vào audio/subtitles.json ("provider") để kiem_tra_ban_quyen.py kiểm tra.
 Ghi ra: audio/scene-<id>.mp3 và audio/subtitles.json (mốc thời gian tính từ đầu mỗi cảnh, đơn vị giây).
-Nếu cảnh có "pronunciation", TTS đọc theo phiên âm nhưng phụ đề vẫn hiện tên gốc.
+Tên ứng dụng có trong kenh/phat-am.json (thu_phat_am.py) tự đọc theo phiên âm đã chấm; "pronunciation" của cảnh ghi đè.
+TTS đọc theo phiên âm nhưng phụ đề vẫn hiện tên gốc.
 """
 from __future__ import annotations
 
@@ -57,15 +58,49 @@ def parse_pronunciation(app_name: str | None, pronunciation: str | None) -> list
     return [(app_name, pronunciation)] if app_name else []
 
 
+DICT_PATH = Path(__file__).resolve().parents[4] / "kenh" / "phat-am.json"
+
+
+def dictionary_pairs(narration: str, skip: set[str]) -> list[tuple[str, str]]:
+    """Tên ứng dụng có trong từ điển phát âm của kênh (kenh/phat-am.json, tạo bằng thu_phat_am.py) và xuất hiện
+    trong lời đọc. Từ 13/10/2026 đây là nguồn phiên âm mặc định; `pronunciation` của cảnh chỉ để ghi đè."""
+    if not DICT_PATH.exists():
+        return []
+    d = json.loads(DICT_PATH.read_text(encoding="utf-8"))
+    words = [bare(t) for t in narration.split()]
+    out = []
+    for name, entry in d.items():
+        toks = [bare(t) for t in name.split()]
+        pron = entry.get("phien_am")
+        if not pron or pron == name or name in skip:
+            continue
+        if any(words[i:i + len(toks)] == toks for i in range(len(words))):
+            out.append((name, pron))
+    return out
+
+
 def build_groups(narration: str, app_name: str | None, pronunciation: str | None):
-    """Trả về (văn bản gửi TTS, [(từ hiển thị, số từ TTS tương ứng)])."""
+    """Trả về (văn bản gửi TTS, [(từ hiển thị, số từ TTS tương ứng)]).
+
+    Dấu câu đứng riêng (vd "nhóm? … Trả") không có mốc từ của TTS: gộp vào từ hiển thị trước nó với 0 từ TTS.
+    Trước 13/10/2026 nó được tính là 1 từ, làm lệch số từ, cảnh rơi về tts-raw (phụ đề hiện phiên âm, mất dấu câu).
+    """
     orig = narration.split()
-    rules = [([bare(t) for t in name.split()], pron.split())
-             for name, pron in parse_pronunciation(app_name, pronunciation)]
-    if not rules:
-        return narration, [(t, 1) for t in orig]
+    pairs = parse_pronunciation(app_name, pronunciation)
+    pairs += dictionary_pairs(narration, {n for n, _ in pairs})
+    pairs.sort(key=lambda p: -len(p[0].split()))  # tên dài trước
+    rules = [([bare(t) for t in name.split()], pron.split()) for name, pron in pairs]
     tts_tokens, groups, i = [], [], 0
     while i < len(orig):
+        if not bare(orig[i]):
+            tts_tokens.append(orig[i])
+            if groups:
+                shown, n = groups[-1]
+                groups[-1] = (shown + " " + orig[i], n)
+            else:
+                groups.append((orig[i], 0))
+            i += 1
+            continue
         for name_toks, pron_toks in rules:
             window = [bare(t) for t in orig[i:i + len(name_toks)]]
             if window == name_toks:
@@ -158,6 +193,8 @@ def align(groups, boundaries, duration):
     if boundaries and sum(n for _, n in groups) == len(boundaries):
         out, k = [], 0
         for shown, n in groups:
+            if n == 0:  # dấu câu đứng đầu lời, không có mốc: bỏ qua
+                continue
             seg = boundaries[k:k + n]
             out.append({"text": shown, "start": seg[0]["start"], "end": seg[-1]["end"]})
             k += n
@@ -202,8 +239,8 @@ async def main_async() -> int:
     project = Path(args.project)
     script = json.loads((project / "script.json").read_text(encoding="utf-8"))
     voice_cfg = script.get("voice") or {}
-    voice = args.voice or voice_cfg.get("name") or "vi-VN-HoaiMyNeural"
-    rate = args.rate or voice_cfg.get("rate") or ("+10%" if script.get("format") == "vertical" else "+0%")
+    voice = args.voice or voice_cfg.get("name") or "vi-VN-NamMinhNeural"
+    rate = args.rate or voice_cfg.get("rate") or ("+40%" if script.get("format") == "vertical" else "+0%")
     pitch = voice_cfg.get("pitch") or "+0Hz"  # cao độ, ví dụ "+10Hz" (script.json voice.pitch)
     only = {int(x) for x in args.only.split(",")} if args.only else None
 
